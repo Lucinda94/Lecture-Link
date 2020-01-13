@@ -18,13 +18,24 @@ body {
   color: #fff;
   padding: 20px;
 }
-#main-header #account-settings {
+#main-header #account-settings  {
   height: calc(100% - 40px);
   position: absolute;
   padding: 20px 30px;
   top: 0;
   right: 0;
+  background-color: rgb(5,99,153,0.781);
+}
+
+#main-header #search {
+  height:calc(100% - 40px);
+  position: absolute;
+  padding: 20px 30px;
+  top: 0;
+  color: grey;
+  right: 12rem;
   background-color: rgb(5,99,153);
+  
 }
 #main-header #account-settings:hover {
   background-color: rgb(44,88,113);
@@ -41,6 +52,8 @@ body {
   top: -5px; /* aligning with icon */
   padding-right: 15px;
 }
+
+
 #messages-wrap {
   display: flex;
   flex-direction: row;
