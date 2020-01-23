@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+#main-header {
+  position: relative;
+  width: 100vw;
+  height: 10vh;
+
+  background-color: rgb(0, 154, 244);
+}
+#main-title {
+  margin:0;
+  font-size: 40px;
+  color: #fff;
+  padding: 20px;
+}
+#main-header #account-settings {
+  height: calc(100% - 40px);
+  position: absolute;
+  padding: 20px 30px;
+  top: 0;
+  right: 0;
+  background-color: rgb(5,99,153);
+}
+#main-header #account-settings:hover {
+  background-color: rgb(44,88,113);
+}
+#main-header #account-settings p {
+  font-size: 20px;
+  color: #fff;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+}
+#account-settings p span {
+  position: relative;
+  top: -5px; /* aligning with icon */
+  padding-right: 15px;
+}
+#messages-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 90vh;
+}
+#main-nav {
+  width: 300px;
+  background-color: #c3cbcf;
+  padding: 10px;
+  color: #616567;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#main-nav h2 {
+  margin: 0;
+  font-size: 17px;
+  color: #616567;
+  margin: 5px;
+  padding-top: 10px;
+}
+#open-conversations {
+  width: 300px;
+  background-color: #eee;
+}
+#messages-container {
+  flex-grow: 1; /* Use all remaining space left after sidebar */
+  background-color: rgb(0,162,123);
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+#messages {
+  flex-grow: 1;
+  background-color: #d9e2e7;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  flex-basis: 100%;
+}
+#new-message {
+  height: 100px;
+  border: 0;
+  background-color: rgb(0, 154, 244);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+
+}
+#new-message input {
+  padding: 20px 0 20px 20px;
+  font-size: 15px;
+  border: 0;
+  flex-grow: 1;
+}
+#new-message button {
+  width: 20%;
+  padding: 0;
+  border: 0;
+  background-color: rgb(0, 154, 244);
+  color: #fff;
+  font-size: 15px;
+}
+#new-message button:hover {
+  background-color: rgb(5,99,153);
+}
+
+
+
+#join-session {
+  padding: 0 20px;
+}
+#join-session input {
+  width: calc(100% - 40px);
+  border: 0;
+  display: block;
+  padding: 10px 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-align: center;
+  font-size: 25px;
+}
+#join-session button {
+  width: 100%;
+  border: 0;
+  display: block;
+  padding: 13px 20px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  text-align: center;
+  background-color: rgb(0, 154, 244);
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+}
+#join-session button:hover {
+  background-color: rgb(5,99,153);
+}
+#join-session p {
+  margin: 5px 0;
+  font-size: 13px;
+  text-align: center;
+}
+#join-session a {
+  color: inherit;
+}
+
+
+.n2-controls {
+  margin-top: 20px;
+}
+.n2-controls ul li:first-of-type a {
+  background-color: #869296;
+  color: #fff;
+}
+.n2-controls ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.n2-controls ul li a {
+   display: block;
+   text-decoration: none;
+   border-radius: 10px;
+
+   font-size: 20px;
+   padding: 10px;
+   color: inherit;
+}
+
+.n2-controls ul li a:hover {
+ background-color: #555;
+ color: #fff;
+}
+.n2-controls .n2-icon {
+  padding: 10px 20px 10px 20px;
+}
+.n2-controls .n2-dest {
+
+}
+
+
+#conversations {
+
+}
+.conversation {
+  position: relative;
+  width: calc(100% - 20px);
+  margin: 10px;
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 300px;
+}
+.conversation .conv-parties {
+  width: 100%;
+  color: #fff;
+}
+.conversation .conv-parties p {
+  display: inline-block;
+  padding: 5px 20px;
+  border-bottom-right-radius: 10px;
+  margin: 0;
+  background-color: rgb(0, 154, 244);
+}
+.conversation .conv-preview {
+  padding: 10px;
+  max-width: 70%;
+}
+.conversation .conv-preview p {
+  padding: 0;
+  margin: 0;
+}
+.conv-info {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  background-color: #eee; /* match with .conversation so any overflow of
+                             .preview is hidden */
+}
+.conv-info p {
+  margin: 0;
+  padding: 0;
+}
+
+.conversation .unread {
+
+}
+.conversation .open { /* The current open conversation */
+
+}
+#conversations .conv-end {
+  text-align: center;
+  color: #8c9093;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.message {
+  margin-top: 10px;
+}
+.message .mes-bubble {
+  margin: 0 40px 0 40px;
+  display: inline-block;
+  position: relative;
+	height: auto;
+  background-color: #fff;
+}
+.message .mes-bubble:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: -20px;
+	right: auto;
+  top: 38px;
+	bottom: auto;
+	border: 12px solid;
+	border-color: #fff #fff transparent transparent;
+} /* adapted from https://codepen.io/Founts/pen/gmhcl */
+.message.outbound .mes-bubble:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  right: -20px;
+	left: auto;
+  top: 38px;
+	bottom: auto;
+	border: 12px solid;
+	border-color: transparent transparent #fff #fff;
+} /* adapted from https://codepen.io/Founts/pen/gmhcl */
+.message .mes-text {
+  padding: 1em;
+}
+.message .mes-party {
+  margin: 5px 40px 0 40px;
+  padding: 0;
+  padding: 5px;
+}
+.message .mes-info {
+  margin: 0 40px 0 40px;
+  color: rgb(40,88,111);
+  display: block;
+  padding: 5px;
+}
+.message.outbound {
+  float: right;
+}
+.message.outbound .mes-party, .message.outbound .mes-info {
+  text-align: right;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "lecture-link",
+  "version": "1.0.0",
+  "description": "Lecturer messaging app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lucinda94/Lecture-Link.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lucinda94/Lecture-Link/issues"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
