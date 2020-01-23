@@ -16,6 +16,7 @@
     "url": "https://github.com/Lucinda94/Lecture-Link/issues"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^7.17.1"
   }
 }
