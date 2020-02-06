@@ -4,6 +4,7 @@ Lecturer messaging app
 ## TODO
 - [ ] Database
   - [ ] EERD
+  - [ ] Double check links and check for loops etc
   - [ ] Data Dictionary
   - [ ] Create code
 - [ ] Add database support (possibly PostgreSQL or even MySQL)
