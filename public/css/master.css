@@ -72,7 +72,6 @@ body {
 
   display: flex;
   flex-direction: column;
-  lex-flow: column wrap;
   align-items: stretch;
 }
 #messages {
