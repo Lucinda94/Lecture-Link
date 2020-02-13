@@ -254,6 +254,9 @@ body {
   font-size: 14px;
   margin-top: 20px;
 }
+#conversations {
+ overflow: auto;
+}
 
 .message-wrap {
   margin-top: 10px;
