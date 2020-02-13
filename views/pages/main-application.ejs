@@ -1,28 +1,21 @@
 <% include ../partials/head %>
 
-<main id=messages-wrap>
+<main id=wrap>
 
-    <!-- Main Navigation -->
-    <% include ../partials/columns/main-nav %>
+    <aside id="main-col1" class="main-col">
+        <!-- Main Navigation -->
+        <% include ../partials/columns/main-nav %>
+    </aside>
 
-    <!-- We can use EJS if statements to decide what to show -->
-    <%if (false) {%>
-        // col1 will be defined and passed from server.js based on what the url is.
-        <%if (col1 === 'conversations') { %>
-    
-            <% include ../partials/columns/conversations %>
+    <aside id="main-col2" class="main-col">
+        <!-- Converstions -->
+        <% include ../partials/columns/conversations %>
+    </aside>
 
-        <% } else { %>
-    
-            // default options
-
-        <% } } %> */
-
-    <!-- Converstions -->
-    <% include ../partials/columns/conversations %>
-
-    <!-- Chat -->
-    <% include ../partials/columns/chat %>
+    <div id="main-col3" class="main-col">
+        <!-- Chat -->
+        <% include ../partials/columns/chat %>
+    </div>
 
 
 </main>

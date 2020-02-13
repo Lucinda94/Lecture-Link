@@ -41,19 +41,41 @@ body {
   top: -5px; /* aligning with icon */
   padding-right: 15px;
 }
-#messages-wrap {
+
+/* Setting up the column structure */
+#wrap {
   display: flex;
   flex-direction: row;
   align-items: stretch;
   height: 90vh;
+  width: 100%;
 }
-#main-nav {
-  width: 300px;
-  background-color: #c3cbcf;
-  padding: 10px;
-  color: #616567;
+.main-col {
+}
+#main-col1 {
   overflow-y: scroll;
   overflow-x: hidden;
+  width: 300px;
+  background-color: #c3cbcf;
+}
+#main-col2 {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#main-col3 {
+  flex-direction: column;
+  flex-flow: column wrap;
+  flex-grow: 1; /* Use all remaining space left after sidebar */
+}
+
+
+
+
+#main-nav {
+  width: calc(100% - 20px);
+  padding: 10px;
+  color: #616567;
 }
 #main-nav h2 {
   margin: 0;
@@ -63,17 +85,11 @@ body {
   padding-top: 10px;
 }
 #open-conversations {
-  width: 300px;
   background-color: #eee;
 }
 #messages-container {
-  flex-grow: 1; /* Use all remaining space left after sidebar */
   background-color: rgb(0,162,123);
-
-  display: flex;
-  flex-direction: column;
-  lex-flow: column wrap;
-  align-items: stretch;
+  height: 100%;
 }
 #messages {
   flex-grow: 1;
@@ -81,6 +97,7 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
   flex-basis: 100%;
+  height: calc(100% - 100px);
 }
 #new-message {
   height: 100px;
@@ -185,9 +202,6 @@ body {
 }
 
 
-#conversations {
-
-}
 .conversation {
   position: relative;
   width: calc(100% - 20px);
@@ -241,8 +255,10 @@ body {
   margin-top: 20px;
 }
 
-.message {
+.message-wrap {
   margin-top: 10px;
+  width: 100%;
+  overflow: hidden;
 }
 .message .mes-bubble {
   margin: 0 40px 0 40px;
