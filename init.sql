@@ -13,7 +13,7 @@ CREATE TABLE user_account(
 CREATE TYPE relationship as enum('Saved', 'Blocked');		
 CREATE TABLE user_relationship (
 								user_id int PRIMARY KEY REFERENCES user_account(user_id),
-								type_of_relatioship relationship NOT NULL);
+								type_of_relationship relationship NOT NULL);
 								
 CREATE TABLE chat (
 					chat_id int PRIMARY KEY,
