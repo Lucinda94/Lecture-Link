@@ -3,7 +3,7 @@ Lecturer messaging app
 
 ## TODO
 - [ ] Database
-  - [X] EERD
+  - [X] ERD
   - [X] Double check links and check for loops etc
   - [ ] Data Dictionary
   - [X] Create code
