@@ -1,6 +1,3 @@
-
-CREATE DATABASE lecture_link;
-
 CREATE TYPE status as enum('Online', 'Away', 'Busy');
 CREATE TABLE user_account(
 					user_id int PRIMARY KEY,
