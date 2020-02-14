@@ -50,8 +50,7 @@ body {
   height: 90vh;
   width: 100%;
 }
-.main-col {
-}
+
 #main-col1 {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -68,8 +67,6 @@ body {
   flex-flow: column wrap;
   flex-grow: 1; /* Use all remaining space left after sidebar */
 }
-
-
 
 
 #main-nav {
@@ -126,8 +123,6 @@ body {
 #new-message button:hover {
   background-color: rgb(5,99,153);
 }
-
-
 
 #join-session {
   padding: 0 20px;
@@ -196,9 +191,6 @@ body {
 }
 .n2-controls .n2-icon {
   padding: 10px 20px 10px 20px;
-}
-.n2-controls .n2-dest {
-
 }
 
 
