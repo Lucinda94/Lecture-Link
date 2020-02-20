@@ -12,7 +12,7 @@ const Help = {
         return bcrypt.compare(pw, hashedPW)
     },
 
-    
+
     validateEmail (email) {
         return /\S+@\S+\.\S+/.test(email);
     },
@@ -23,6 +23,8 @@ const Help = {
         process.env.SECRET,
         {expiresIn: "14d"}
         );
+
+        return webToken;
     }
 
 
