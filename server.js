@@ -19,6 +19,9 @@ app.get('/', function(req, res) {
 const UserController = require('./user/UserController');
 app.use('/api/user', UserController);
 
+const ChatController = require('./chats/ChatController');
+app.use('/api/chats', ChatController);
+
 // static content
 app.use('/', express.static('public'));
 

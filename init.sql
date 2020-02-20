@@ -11,18 +11,13 @@ CREATE TYPE relationship as enum('Saved', 'Blocked');
 CREATE TABLE user_relationship (
 								user_id int PRIMARY KEY REFERENCES user_account(user_id),
 								type_of_relationship relationship NOT NULL);
-
-CREATE TABLE chat (
-					chat_id int PRIMARY KEY,
-					user_id_1 int REFERENCES user_account(user_id) NOT NULL,
-					user_id_2 int REFERENCES user_account(user_id) NOT NULL);
 					
-CREATE TABLE message (
+CREATE TABLE chat_message (
 						message_id int PRIMARY KEY,
-						chat_id int REFERENCES chat(chat_id) NOT NULL,
+						sender_id int REFERENCES user_account(user_id) NOT NULL,
+						receiver_id int REFERENCES user_account(user_id) NOT NULL,
 						message_time timestamp NOT NULL,
-						message_content varchar(255) NOT NULL,
-						message_sender_id int REFERENCES chat(user_id_1) NOT NULL);
+						message_content varchar(255) NOT NULL);
 
 CREATE TABLE report (
 								report_id int PRIMARY KEY,
