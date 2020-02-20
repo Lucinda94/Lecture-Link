@@ -9,7 +9,7 @@ const Help = {
 
 
     passwordCompare (hashedPW, pw) {
-        return bcrypt.compare(pw, hashedPW)
+        return bcrypt.compare(pw, hashedPW);
     },
 
 
