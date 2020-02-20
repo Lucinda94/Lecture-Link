@@ -15,21 +15,19 @@ app.get('/', function(req, res) {
     res.render('pages/main-application');
 });
 
-// just testing params (probably wont use this)
-app.get('/user/:userId/', function (req, res) {
-    const userID = req.params["userId"];
-    res.render('pages/user', {
-        userId:userID
-    });
-});
+// this will handle the /user/... api endpoints
+const UserController = require('./user/UserController');
+app.use('/api/user', UserController);
 
 // static content
-app.use('/static', express.static('public'));
+app.use('/', express.static('public'));
 
 /*** 404 - Don't put any code past here ***/
 app.get('*', function(req, res) {
     res.render('pages/404');
 });
 
-app.listen(8080);
-console.log("Server listening on port 8080");
+app.listen(8080, (err) => {
+    if (err) console.log('Could not start server', err);
+    console.log('Server listening on port 8080');
+});
