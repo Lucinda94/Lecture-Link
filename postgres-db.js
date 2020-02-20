@@ -6,15 +6,25 @@ const pool = new Pool({
     host: '/var/run/postgresql'  
 });
 
-module.exports.getMessagesBetweenUsers = (user1, user2) => {
-    return pool.connect()
-        .then(client => {
-            return client
-                // TODO actually make the query work
-                .query('SELECT * FROM message JOIN chat ON message.chat_id=chat.chat_id WHERE (chat.user_id_1 = $1 OR chat.user_id_2 = $2) AND (chat.user_id_1 = $2 OR chat.user_id_2 = $1)', [user1, user2])
-                .then(res => {
-                    return res.rows[0];
-                })
-                .finally(client => client.release());
-    });
+module.exports.getAllUsers = async () => {
+    const client = await pool.connect();
+
+    try {
+        const { rows } = await client.query('SELECT * FROM users');
+        return rows;
+    } finally {
+        // always always always remember to release the client
+        client.release()
+    }
+};
+
+module.exports.getUser = async (id) => {
+    const client = await pool.connect();
+
+    try {
+        const { rows } = await client.query('SELECT * FROM users WHERE id = $1', [id]);
+        return rows[0];
+    } finally {
+        client.release();
+    }
 };
