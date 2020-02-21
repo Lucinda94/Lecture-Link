@@ -9,37 +9,18 @@ const pool = new Pool({
 // USERS
 
 module.exports.getAllUsers = async () => {
-    const client = await pool.connect();
-
-    try {
-        const { rows } = await client.query('SELECT * FROM user_account');
-        return rows;
-    } finally {
-        // always always always remember to release the client
-        client.release()
-    }
+    const { rows } = await pool.query('SELECT * FROM user_account');
+    return rows;
 };
 
 module.exports.getUser = async (id) => {
-    const client = await pool.connect();
-
-    try {
-        const { rows } = await client.query('SELECT * FROM user_account WHERE user_id = $1', [id]);
-        return rows[0];
-    } finally {
-        client.release();
-    }
+    const { rows } = await client.query('SELECT * FROM user_account WHERE user_id = $1', [id]);
+    return rows[0];
 };
 
 // CHATS
 
 module.exports.getChatsForUser = async (userId) => {
-    const client = await pool.connect();
-
-    try {
-        const { rows } = await client.query('SELECT * FROM chat_message WHERE sender_id = $1 OR receiver_id = $1', [userId]);
-        return rows;
-    } finally {
-        client.release();
-    }
+    const { rows } = await client.query('SELECT * FROM chat_message WHERE sender_id = $1 OR receiver_id = $1', [userId]);
+    return rows;
 };

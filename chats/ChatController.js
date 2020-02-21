@@ -3,6 +3,8 @@ const router = express.Router();
 
 const db = require('../postgres-db');
 
+// TODO authentication obvs
+
 router.get('/:id', async (req, res) => {
     try {
         const chats = await db.getChatsForUser(req.params.id);
