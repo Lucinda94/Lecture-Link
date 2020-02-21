@@ -11,6 +11,7 @@ app.get('/', function(req, res) {
     // if the user isn't logged in:
     // TODO: redirect to login page
 
+
     // if the user is logged in:
     res.render('pages/main-application');
 });
