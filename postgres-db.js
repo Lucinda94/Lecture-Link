@@ -18,6 +18,11 @@ module.exports.getUser = async (id) => {
     return rows[0];
 };
 
+module.exports.getUserRelationships = async (id) => {
+    const { rows } = await pool.query('SELECT * FROM user_account WHERE user_id = $1 INNER JOIN ON user_relationship.user_id = user_account.user_id', [id]);
+    return rows;
+};
+
 // CHATS
 
 module.exports.getChatsForUser = async (userId) => {
