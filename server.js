@@ -24,7 +24,7 @@ const ChatController = require('./chats/ChatController');
 app.use('/api/chats', ChatController);
 
 // static content
-app.use('/', express.static('public'));
+app.use('/static', express.static('public'));
 
 /*** 404 - Don't put any code past here ***/
 app.get('*', function(req, res) {
