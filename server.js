@@ -113,6 +113,10 @@ app.get('/', checkLoggedIn, function(req, res) {
   res.render('pages/main-application');
 });
 
+/****
+ * API
+ */
+
 // this will handle the /user/... api endpoints
 const UserController = require('./user/UserController');
 app.use('/api/user', UserController);
