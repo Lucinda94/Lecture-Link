@@ -9,9 +9,10 @@ CREATE TABLE user_account(
 
 CREATE TYPE relationship as enum('Saved', 'Blocked', 'Lecturer');
 CREATE TABLE user_relationship (
-								user_id int PRIMARY KEY REFERENCES user_account(user_id),
+								user_id1 int REFERENCES user_account(user_id),
+								user_id2 int REFERENCES user_account(user_id),
 								type_of_relationship relationship NOT NULL);
-					
+
 CREATE TABLE chat_message (
 						message_id int PRIMARY KEY,
 						sender_id int REFERENCES user_account(user_id) NOT NULL,
@@ -25,13 +26,15 @@ CREATE TABLE report (
 								report_id int PRIMARY KEY,
 								report_status varchar(50),
 								report_comments varchar(255),
-								flagged_message_id int REFERENCES message(message_id));
+								flagged_message_id int REFERENCES chat_message(message_id));
 
+CREATE TYPE session_status as enum('Open', 'Closed');
 CREATE TABLE live_session (
 							live_session_id int PRIMARY KEY,
 							live_sesion_name varchar(50) NOT NULL,
 							live_session_owner_id int REFERENCES user_account(user_id) NOT NULL,
-							live_session_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP);
+							live_session_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+							live_session_status session_status NOT NULL);
 
 CREATE TABLE live_message (
 							live_message_id int PRIMARY KEY,
