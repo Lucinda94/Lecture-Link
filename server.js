@@ -33,7 +33,7 @@ initPassport(
 // FOR TESTING
 const users = [
   {
-  id: '1582914548772',
+  id: '0',
   name: 'Austin Collins',
   email: 'austcollins@hotmail.com',
   password: '$2b$10$kX48Hm/UXT0CBDA7rdCzAeVbpAWH7hQzPxM.J1I/t1MhreF35j9KG' // password is 123
