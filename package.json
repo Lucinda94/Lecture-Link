@@ -7,7 +7,8 @@
         "setup": "npm install && npm run initpgsql",
         "initpgsql": "createdb lecturelink; psql lecturelink < init.sql",
         "start": "node server.js",
-        "devStart": "nodemon server.js"
+        "devStart": "nodemon server.js",
+        "test": "jest"
     },
     "dependencies": {
         "bcrypt": "^4.0.0",
@@ -22,7 +23,8 @@
         "pg": "^7.18.1",
         "session-file-store": "^1.4.0",
         "uuid": "^7.0.1",
-        "uuidv4": "^6.0.5"
+        "uuidv4": "^6.0.5",
+        "jest": "^25.1.0"
     },
     "repository": {
         "type": "git",
