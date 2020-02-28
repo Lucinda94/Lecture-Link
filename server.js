@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
-const methodOverride = require('method-override');
 
 // set up passport
 const initPassport = require('./passport-config');
@@ -30,7 +29,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(flash());
 app.use(session({
-  secret: "92yr82gfjkbeKLJFB9PGHR3UG", // keyboard cat
+  secret: "92yr82gfjkbeKLJFB9PGHR3UG", // keyboard cat -
   resave: false,
   saveUninitialized: false
 }))
