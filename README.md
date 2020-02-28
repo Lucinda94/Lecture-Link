@@ -11,3 +11,5 @@ Lecturer messaging app
 - [ ] Add API endpoints for fetching user data (eg /api/chats/:user)
   - [ ] Add authentication for each endpoint (I'm thinking using JSON web tokens (JWT) maybe)
 - [ ] Actually make the app work
+- [ ] Create test scripts
+
