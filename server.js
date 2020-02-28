@@ -14,14 +14,13 @@ initPassport(
   id => { return users.find(user => user.id === id) }
   );
 
-
 // FOR TESTING
 const users = [
   {
   id: '1582914548772',
   name: 'Austin Collins',
   email: 'austcollins@hotmail.com',
-  password: '$2b$10$kX48Hm/UXT0CBDA7rdCzAeVbpAWH7hQzPxM.J1I/t1MhreF35j9KG' //123
+  password: '$2b$10$kX48Hm/UXT0CBDA7rdCzAeVbpAWH7hQzPxM.J1I/t1MhreF35j9KG' // password is 123
 }
 ];
 
@@ -106,24 +105,12 @@ app.use('/api/chats', ChatController);
 // static content
 app.use('/static', express.static('public'));
 
-// create the login get and post routes
-app.get('/login', (req, res) => {
-    console.log('Inside GET /login callback function')
-    console.log(req.sessionID)
-    res.send(`You got the login page!\n`)
-  })
-  
-  app.post('/login', (req, res) => {
-    console.log('Inside POST /login callback function')
-    console.log(req.body)
-    res.send(`You posted to the login page!\n`)
-  })
-
-/*** 404 - Don't put any code past here ***/
+// 404 route
 app.get('*', function(req, res) {
     res.render('pages/404');
 });
 
+// checks if a person is logged in
 function checkLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
