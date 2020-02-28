@@ -6,21 +6,47 @@ const flash = require('express-flash');
 const session = require('express-session');
 
 /****
- * Set up passport
+ * Database
+ */
+const db = require('./postgres-db.js');
+
+/****
+ * Set up passport (handles logging in and client sessions)
  */
 const initPassport = require('./passport-config');
 // TODO: connect passport to the database
 initPassport(
   passport, 
   email => {
+    /*
     // where given 'email' get 'id' and 'password' from the database.
-    const userData = {
-      id: '45',
-      password: 'password from database'
-    };
+    const user = db.getUserByEmail(email);
+    if (user.length === 1) { // check one user returned
+      const userData = {
+        id: user[0].user_id,
+        password: user[0].user_password
+      };
+    } else {
+      userData = null; // no user (or more than one) found, return null
+    }
+    return userData;
+    */
     return users.find(user => user.email === email) // for testing will return userData
   },
   id => {
+    /*
+    // where given 'id' get 'password' from the database.
+    const user = db.getUser(id);
+    if (user.length === 1) { // check one user returned
+      const userData = {
+        id: id,
+        password: user[0].user_password
+      };
+    } else {
+      userData = null; // no user (or more than one) found, return null
+    }
+    return userData;
+    */
     const userData = {
       // where given 'id' get 'password' from the database.
       id: id,

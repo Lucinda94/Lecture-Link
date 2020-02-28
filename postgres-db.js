@@ -22,6 +22,13 @@ module.exports.getUser = async (id) => {
     const { rows } = await pool.query('SELECT * FROM user_account WHERE user_id = $1', [id]);
     return rows;
 };
+
+// used for logging in
+module.exports.getUserByEmail = async (email) => {
+    const { rows } = await pool.query('SELECT * FROM user_account WHERE user_email = $1', [email]);
+    return rows;
+};
+
 // Not sure if type_of_relationship is declared properly here - works in VM
 module.exports.getUsersLecturers = async (id) => {
     const { rows } = await pool.query('SELECT user_id2 FROM user_relationship WHERE user_id1 = $1 AND type_of_relationship = $2', [id, 'Lecturer']);
