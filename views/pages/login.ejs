@@ -1,0 +1,22 @@
+<% include ../partials/head %>
+
+<main style="padding:20px">
+
+    <h1>Login</h1>
+    <% if (messages.error) { %>
+      <%= messages.error %>
+    <% } %>
+    <form action="/login" method="post">
+
+      <label for="email"> Email: </label>
+      <input id="email" type="email" name="email" placeholder="example@example.com" required>
+
+      <label for="password"> Password: </label>
+      <input id="password" type="password" name="password" value="password">
+
+      <input type="submit" value="Login">
+    </form>
+    <a href="/register">Register for an account?</a>
+</main>
+
+<% include ../partials/foot %>

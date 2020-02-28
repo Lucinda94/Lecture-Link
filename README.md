@@ -11,3 +11,9 @@ Lecturer messaging app
 - [ ] Add API endpoints for fetching user data (eg /api/chats/:user)
   - [ ] Add authentication for each endpoint (I'm thinking using JSON web tokens (JWT) maybe)
 - [ ] Actually make the app work
+
+
+## References
+- The login system:
+-- https://github.com/WebDevSimplified/Nodejs-Passport-Login
+-- https://www.youtube.com/watch?time_continue=125&v=-RCnNyD0L-s&feature=emb_logo
