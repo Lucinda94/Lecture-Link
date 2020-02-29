@@ -43,16 +43,6 @@ initPassport(
   }
   );
 
-// FOR TESTING
-const users = [
-  {
-  id: '0',
-  name: 'Austin Collins',
-  email: 'austcollins@hotmail.com',
-  password: '$2b$10$kX48Hm/UXT0CBDA7rdCzAeVbpAWH7hQzPxM.J1I/t1MhreF35j9KG' // password is 123
-}
-];
-
 /****
  * Set up application
  */
@@ -68,7 +58,6 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 /****
  * 
@@ -131,10 +120,10 @@ app.get('/', checkLoggedIn, function(req, res) {
  * API
  */
 // this will handle the /user/... api endpoints
-const UserController = require('./user/UserController');
+const UserController = require('./api/user/UserController');
 app.use('/api/user', UserController);
 
-const ChatController = require('./chats/ChatController');
+const ChatController = require('./api/chats/ChatController');
 app.use('/api/chats', ChatController);
 
 /****

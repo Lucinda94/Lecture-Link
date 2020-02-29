@@ -9,7 +9,7 @@ const pool = new Pool({
 // USERS
 //Not sure how to insert a query or even if we'll end up using this method of accessing the DB but these queries can be used no matter what we do
 module.exports.addUser = async (user_fName, user_Lname, user_email, user_password, user_status) => {
-  const {rows} = await pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,$5)', [user_fName, user_Lname, user_email, user_password, user_status]);
+  const {rows} = await pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [user_fName, user_Lname, user_email, user_password, user_status]);
   return rows;
 };
 
@@ -26,6 +26,11 @@ module.exports.getUser = async (id) => {
 // used for logging in
 module.exports.getUserByEmail = async (email) => {
     const { rows } = await pool.query('SELECT * FROM user_account WHERE user_email = $1', [email]);
+    return rows;
+};
+
+module.exports.getUserRole = async (id) => {
+    const { rows } = await pool.query('SELECT user_role FROM user_account WHERE user_id = $1', [id]);
     return rows;
 };
 

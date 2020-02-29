@@ -1,10 +1,12 @@
 CREATE TYPE status as enum('Online', 'Away', 'Busy');
+CREATE TYPE role as enum('Student', 'Lecturer', 'Moderator', 'Admin');
 CREATE TABLE user_account(
 					user_id SERIAL PRIMARY KEY,
 					user_first_name varchar(35) NOT NULL,
 					user_last_name varchar(35) NOT NULL,
 					user_email varchar(255) NOT NULL,
 					user_password varchar NOT NULL,
+					user_role role NOT NULL DEFAULT 'Student',
 					user_status status NOT NULL);
 
 CREATE TYPE relationship as enum('Saved', 'Blocked', 'Lecturer');
