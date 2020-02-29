@@ -115,6 +115,9 @@ app.get('/logout', (req, res) => {
   req.logOut(); // tell passport to log the user out
   res.redirect('/login'); // redirect to the login page
 })
+app.get('/forgot', (req, res) => {
+  res.render('pages/forgot-password');
+})
 
 /*****
  * Main application page
