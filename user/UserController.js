@@ -5,16 +5,17 @@ const db = require('../postgres-db');
 
 // TODO add user authentication
 
-router.get('/', async (res, req) => {
+router.get('/', async (req, res) => {
     try {
         const users = await db.getAllUsers();
         res.status(200).send(users);
     } catch (err) {
+        console.log(err);
         return error(res, 'Could not fetch all users');
     }
 });
 
-router.get('/:id', async (res, req) => {
+router.get('/:id', async (req, res) => {
     try {
         const user = await db.getUser(req.params.id);
         if (!user) {

@@ -17,42 +17,29 @@ const initPassport = require('./passport-config');
 // TODO: connect passport to the database
 initPassport(
   passport, 
-  email => {
-    /*
+  async email => {
     // where given 'email' get 'id' and 'password' from the database.
-    const user = db.getUserByEmail(email);
+    const user = await db.getUserByEmail(email);
+    var userData = null;
     if (user.length === 1) { // check one user returned
-      const userData = {
+      userData = {
         id: user[0].user_id,
         password: user[0].user_password
       };
-    } else {
-      userData = null; // no user (or more than one) found, return null
     }
     return userData;
-    */
-    return users.find(user => user.email === email) // for testing will return userData
   },
-  id => {
-    /*
+  async id => {
     // where given 'id' get 'password' from the database.
-    const user = db.getUser(id);
+    const user = await db.getUser(id);
+    var userData = null;
     if (user.length === 1) { // check one user returned
-      const userData = {
+      userData = {
         id: id,
         password: user[0].user_password
       };
-    } else {
-      userData = null; // no user (or more than one) found, return null
     }
     return userData;
-    */
-    const userData = {
-      // where given 'id' get 'password' from the database.
-      id: id,
-      password: 'password from database'
-    };
-    return users.find(user => user.id === id) // for testing will return userData
   }
   );
 
@@ -100,24 +87,22 @@ app.post('/login', checkNotLoggedIn, passport.authenticate('local', {
 }))
 // return the registration page
 app.get('/register', checkNotLoggedIn, (req, res) => {
-  res.render('pages/register');
+  res.redirect('/login');
+ })
+ // return the registration page
+app.get('/register/confirm-email', checkNotLoggedIn, (req, res) => {
+  res.render('pages/confirm-email');
  })
 // when the registration form is submitted
 app.post('/register', checkNotLoggedIn, async (req, res, next) => {
   try {
     // hash the password the user has sent. Use await as this is async
     const passHash = await bcrypt.hash(req.body.password, 10);
-    // just for testing: push this to database
-    users.push({
-      id: Date.now().toString(), // this will be made by database
-      name: req.body.name,
-      email: req.body.email,
-      password: passHash
-    });
+    const user = await db.addUser(req.body.fname, req.body.lname, req.body.email, passHash, "Busy");
     // TODO: send confirmation email
 
     // registration worked so send to login page
-    res.redirect('/login');
+    res.redirect('/register/confirm-email');
 
   } catch (err) {
     console.log(err);
@@ -142,7 +127,6 @@ app.get('/', checkLoggedIn, function(req, res) {
 /****
  * API
  */
-
 // this will handle the /user/... api endpoints
 const UserController = require('./user/UserController');
 app.use('/api/user', UserController);

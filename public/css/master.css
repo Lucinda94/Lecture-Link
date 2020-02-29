@@ -307,3 +307,87 @@ body {
 .message.outbound .mes-party, .message.outbound .mes-info {
   text-align: right;
 }
+/****
+* Welcome Page
+*/
+#welcome-page #welcome-message, #welcome-page #login-options {
+  width: calc(50% - 40px);
+  float: left;
+  padding: 10px;
+}
+
+#welcome-page #welcome-message article {
+  padding: 40px;
+
+}
+#welcome-page #welcome-message h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+#welcome-page #welcome-message p {
+  font-size: 1.1em;
+}
+
+#welcome-page #login-options form {
+  display: block;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+}
+#welcome-page #login-options form input {
+  display: block;
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 5px 0 10px 0;
+  border-radius: 10px;
+  border: 2px solid rgb(0, 154, 244);
+}
+#welcome-page #login-options form label {
+  margin-top: 5px;
+}
+#welcome-page #login-options .forgot {
+  color: #858383;
+  font-size: 0.8em;
+  padding-left: 10px;
+}
+
+/****
+* Confirm email page
+*/
+#confirm-email {
+  max-width: calc(400px - 10px);
+  padding: 10px;
+  margin: 0 auto;
+}
+#confirm-email h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+#confirm-email p {
+  font-size: 1.1em;
+}
+
+#confirm-email form {
+  display: block;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+}
+#confirm-email form input {
+  display: block;
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 5px 0 10px 0;
+  border-radius: 10px;
+  border: 2px solid rgb(0, 154, 244);
+}
+#confirm-email form label {
+  margin-top: 5px;
+}
+#confirm-email .resend {
+  color: #858383;
+  font-size: 0.8em;
+  padding-left: 10px;
+}

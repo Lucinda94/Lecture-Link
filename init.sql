@@ -1,10 +1,10 @@
 CREATE TYPE status as enum('Online', 'Away', 'Busy');
 CREATE TABLE user_account(
-					user_id int PRIMARY KEY,
+					user_id SERIAL PRIMARY KEY,
 					user_first_name varchar(35) NOT NULL,
 					user_last_name varchar(35) NOT NULL,
 					user_email varchar(255) NOT NULL,
-					user_password varchar(50) NOT NULL,
+					user_password varchar NOT NULL,
 					user_status status NOT NULL);
 
 CREATE TYPE relationship as enum('Saved', 'Blocked', 'Lecturer');

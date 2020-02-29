@@ -1,22 +1,43 @@
 <% include ../partials/head %>
 
-<main style="padding:20px">
-
-    <h1>Login</h1>
-    <% if (messages.error) { %>
-      <%= messages.error %>
-    <% } %>
-    <form action="/login" method="post">
-
-      <label for="email"> Email: </label>
-      <input id="email" type="email" name="email" placeholder="example@example.com" required>
-
-      <label for="password"> Password: </label>
-      <input id="password" type="password" name="password" value="password">
-
-      <input type="submit" value="Login">
+<main id=welcome-page>
+  <section id="welcome-message">
+    <article>
+      <h1>Welcome to LectureLink</h1>
+      <p>A quick and convenient communicaiton link between students and lecturers, ending lengthy email threads and speeding up the help you need.</p>
+    </article>
+    <article>
+      <h2>Latest Changes</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lobortis dictum felis, ac porttitor urna suscipit et. Phasellus aliquam lorem eget purus varius, a egestas purus feugiat.</p>
+      <p>Donec vestibulum, enim rutrum facilisis luctus, justo nunc gravida dui, non fringilla felis erat vitae ipsum. Morbi pretium urna eu urna maximus, sit amet hendrerit urna facilisis.</p>
+      <p>Fusce fermentum mi nisi, sit amet mollis felis mattis at. Aliquam commodo ante a nisl rutrum imperdiet. Phasellus dictum auctor posuere. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+    </article>
+  </section>
+  <section id="login-options">
+    <h2>Let's get started...</h2>
+    <form class="" action="/register" method="post">
+      <label for="fname" aria-label="required">First name</label>
+      <input type="text" name="fname" value="" placeholder="John" aria-label="required">
+      <label for="lname">Last Name</label>
+      <input type="text" name="lname" value="" placeholder="Doe" aria-label="required">
+      <label for="email">University Email</label>
+      <input type="email" name="email" value="" placeholder="example@university.ac.uk" aria-label="required">
+      <label for="password">Choose a password</label>
+      <input type="password" name="password" value="" placeholder="xxxxxxx" ondragover=""aria-label="required">
+      <button type="submit">Get started...</button>
     </form>
-    <a href="/register">Register for an account?</a>
+    <h2>Already have an account?</h2>
+    <form class="" action="/login" method="post">
+      <% if (messages.error) { %>
+        <%= messages.error %>
+      <% } %>
+      <label for="email">University Email</label>
+      <input type="email" name="email" value="" placeholder="example@university.ac.uk" aria-label="required">
+      <label for="password">Enter your password</label>
+      <input type="password" name="password" placeholder="xxxxxxx" value="" aria-label="required">
+      <button type="submit">Login</button><a class="forgot" href="/forgot">Problems logging in?</a>
+    </form>
+  </section>
 </main>
 
 <% include ../partials/foot %>

@@ -3,13 +3,13 @@ const { Pool } = require('pg');
 const pool = new Pool({
     database: 'lecturelink',
     statement_timeout: 5000,
-    host: '/var/run/postgresql'
+    host: 'localhost'
 });
 
 // USERS
 //Not sure how to insert a query or even if we'll end up using this method of accessing the DB but these queries can be used no matter what we do
-module.exports.addUser = async (user_id, user_fName, user_Lname, user_email, user_password, user_status) => {
-  const {rows} = await pool.query('INSERT INTO user_account VALUES($1,$2,$3,$4,$5,$6)', [user_id, user_fName, user_Lname, user_email, user_password, user_status]);
+module.exports.addUser = async (user_fName, user_Lname, user_email, user_password, user_status) => {
+  const {rows} = await pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,$5)', [user_fName, user_Lname, user_email, user_password, user_status]);
   return rows;
 };
 
