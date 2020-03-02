@@ -45,6 +45,12 @@ module.exports.getSavedUsers = async (id) => {
     return rows;
 };
 
+// search user by First Name, Last Name, Email
+module.exports.searchUsers = async (firstName, lastName) => {
+    const { rows } = await pool.query('SELECT user_id FROM user_account WHERE user_first_name ILIKE $1 AND user_last_name ILIKE $2', [firstName, lastName]);
+    return rows;
+};
+
 // CHATS
 
 module.exports.getChatsForUser = async (userId) => {

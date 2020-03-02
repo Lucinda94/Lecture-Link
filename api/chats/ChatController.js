@@ -3,19 +3,6 @@ const router = express.Router();
 
 const db = require('../../postgres-db');
 
-// TODO authentication obvs
-/*
-Done, use:
-app.get('/checkuser', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.send("your user ID is " + req.user.id);
-  } else {
-    res.send("you are not logged in");
-  }
-})
-where user.id is their primary key in the database
-*/
-
 router.get('/:id', async (req, res) => {
     try {
         const chats = await db.getChatsForUser(req.params.id);

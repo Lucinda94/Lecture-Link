@@ -60,6 +60,7 @@ body {
 #main-col2 {
   overflow-y: scroll;
   overflow-x: hidden;
+  width: 300px;
 }
 
 #main-col3 {
@@ -124,6 +125,10 @@ body {
   background-color: rgb(5,99,153);
 }
 
+/****
+* Joining a live session
+*/
+
 #join-session {
   padding: 0 20px;
 }
@@ -163,11 +168,14 @@ body {
   color: inherit;
 }
 
+/****
+* Main navigation links
+*/
 
 .n2-controls {
   margin-top: 20px;
 }
-.n2-controls ul li:first-of-type a {
+.n2-controls ul li:first-of-type {
   background-color: #869296;
   color: #fff;
 }
@@ -176,7 +184,7 @@ body {
   margin: 0;
   padding: 0;
 }
-.n2-controls ul li a {
+.n2-controls ul li {
    display: block;
    text-decoration: none;
    border-radius: 10px;
@@ -186,7 +194,7 @@ body {
    color: inherit;
 }
 
-.n2-controls ul li a:hover {
+.n2-controls ul li:hover {
  background-color: #555;
  color: #fff;
 }
@@ -194,6 +202,9 @@ body {
   padding: 10px 20px 10px 20px;
 }
 
+/****
+* Conversations
+*/
 
 .conversation {
   position: relative;
@@ -250,6 +261,10 @@ body {
 #conversations {
  overflow: auto;
 }
+
+/****
+* 1on1 Chat
+*/
 
 .message-wrap {
   margin-top: 10px;
@@ -390,4 +405,60 @@ body {
   color: #858383;
   font-size: 0.8em;
   padding-left: 10px;
+}
+
+/*****
+* Col2 Discover
+**/
+#column-discover #user-search {
+  position: relative;
+  width: calc(100% - 40px);
+  margin: 10px;
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 300px;
+}
+#column-discover #user-search label, #column-discover #user-search button {
+  display: block;
+  margin: 10px 0 10px 0;
+}
+#column-discover #user-search input {
+  display: block;
+  width: calc(100% - 20px);
+  border: none;
+  border-radius: 5px;
+  margin: 0;
+  padding: 10px;
+}
+#column-discover .user {
+  position: relative;
+  width: calc(100% - 20px);
+  margin: 10px;
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 300px;
+}
+#column-discover .user.open { /* Styles for the selected user */
+
+}
+#column-discover .user p {
+  padding: 10px;
+  margin: 0;
+  width: calc(100% - 20px);
+}
+#column-discover .user p.name {
+  background-color: #999;
+  color: #fff;
+}
+#column-discover .user .add-user {
+  margin-left: 5px;
+}
+#column-discover .search-end {
+  text-align: center;
+  color: #8c9093;
+  font-size: 14px;
+  margin-top: 20px;
 }

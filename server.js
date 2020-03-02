@@ -14,7 +14,7 @@ const db = require('./postgres-db.js');
  * Set up passport (handles logging in and client sessions)
  */
 const initPassport = require('./passport-config');
-// TODO: connect passport to the database
+// this next part connects passport to the users table in the database.
 initPassport(
   passport, 
   async email => {

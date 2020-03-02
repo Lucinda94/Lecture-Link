@@ -1,3 +1,9 @@
+/****
+ * Configuration of Passport.js as per the documentation.
+ * 
+ * Don't change this.
+ * 
+ */
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 

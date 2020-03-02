@@ -1,3 +1,6 @@
+<!-- Templates: note these would be precompiled in a final release -->
+
+
 <!-- 
     Template: template-chat-message
     Use:
@@ -21,5 +24,23 @@
           <time class="mes-info">{{time}}</time>
         </div>
     </div>
+
+</script>
+
+<!-- Template for a search result in the discover column 
+
+  {
+    name: "John Doe",
+    id: 1,
+    email: up123456@myport.ac.uk
+  }
+
+-->
+<script id="template-discover-column-card" type="text/x-handlebars-template">
+
+  <div class="user" data-id="{{id}}">
+    <p class="name">{{name}} </a><span class="add-user"><i class="fas fa-user-plus"></i></p>
+    <p>{{email}}</p>
+  </div>
 
 </script>

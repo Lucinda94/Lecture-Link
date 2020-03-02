@@ -18,7 +18,21 @@ TODO:
 
 */
 
+// Returns the users own information
+// Used for own acount page
 router.get('/', checkAccess, async (req, res) => {
+    const user_id = req.session.passport.user;
+    try {
+        const users = await db.getUser(user_id);
+        res.status(200).send(users);
+    } catch (err) {
+        console.log(err);
+        return error(res, 'Unable to get your information');
+    }
+});
+
+// Returns a complete list of users
+router.get('/all', checkAccess, async (req, res) => {
     try {
         const users = await db.getAllUsers();
         res.status(200).send(users);
@@ -28,6 +42,20 @@ router.get('/', checkAccess, async (req, res) => {
     }
 });
 
+// Returns a list of users public information based on name or email query
+router.get('/search', checkAccess, async (req, res) => {
+
+    const fnameQuery = req.query.fname;
+    const lnameQuery = req.query.lname;
+    
+    const users = await db.searchUsers(fnameQuery, lnameQuery);
+    console.log(users);
+    res.status(200).send(users);
+
+    
+});
+
+// Returns another users public informaiton
 router.get('/:id', checkAccess, async (req, res) => {
     try {
         const user = await db.getUser(req.params.id);
