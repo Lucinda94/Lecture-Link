@@ -453,6 +453,9 @@ body {
   background-color: #999;
   color: #fff;
 }
+#column-discover .user.lecturer p.name {
+  background-color: #f45a00;
+}
 #column-discover .user .add-user {
   margin-left: 5px;
 }

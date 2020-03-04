@@ -8,14 +8,9 @@ $(function() {
 
 });
   
-
-
 /****
- *  Columns
- *  -- Handles the column format and loading the html ect.
+ * Conversations
  */
-
-// conversations
 function col2LoadConversations() {
     // load discover into col2
     $('#main-col2').load(`static/html/col2/conversations/main.html`, function() {
@@ -25,7 +20,9 @@ function col2LoadConversations() {
 }
 $("#n2-button-conversations").click(col2LoadConversations);
 
-// discover
+/****
+ * Discover
+ */
 function col2LoadDiscover() {
     // load discover into col2
     $('#main-col2').load(`static/html/col2/discover/main.html`, function() {
@@ -34,7 +31,43 @@ function col2LoadDiscover() {
 }
 $("#n2-button-discover").click(col2LoadDiscover);
 
-// relationships (same for lecturers/students/blocked, will just load different content)
+$(document).on('submit','#user-search', function(e){
+    // stop form from submitting
+    e.preventDefault();
+    // post ajax request to API with form values
+    var form = $(this);
+    $.ajax({ 
+         url   : '/api/user/search/',
+         type  : "POST",
+         data  : form.serialize(), // data to be submitted
+         success: function(response){
+            const resultsContainer = $("#search-results");
+            // clear previous results
+            resultsContainer.empty();
+            // loop through results
+            for (user of response) {
+                // extract values form jquery
+                const id = user.user_id
+                const name = user.user_first_name + " " + user.user_last_name;
+                const email = user.user_email;
+                const lecturerClass = (user.user_role === "Lecturer") ? " lecturer" : "";
+                const html = `<div class="user${lecturerClass}" data-id="${id}">
+                                 <p class="name">${name}</a><span class="add-user"><i class="fas fa-user-plus"></i></p>
+                                 <p>${email}</p>
+                              </div>`;
+                              console.log(html);
+                resultsContainer.append(html);
+                // pray
+            }
+
+         }
+    });
+    return false;
+ }) 
+
+/****
+ * Relationships
+ */
 function col2LoadRelationships(event) {
 
     // display the relationships column
@@ -79,44 +112,6 @@ function col2LoadRelationships(event) {
 $("#n2-button-saved-students").click({type_of_relationship: "Saved"}, col2LoadRelationships);
 $("#n2-button-saved-lecturers").click({type_of_relationship: "Lecturers"}, col2LoadRelationships);
 $("#n2-button-blocked").click({type_of_relationship: "Blocked"}, col2LoadRelationships);
-
-/****
- * Discover Column
- * - Handles loading searches from the API and displaying them.
- */
-$(document).on('submit','#user-search', function(e){
-    // stop form from submitting
-    e.preventDefault();
-    // post ajax request to API with form values
-    var form = $(this);
-    $.ajax({ 
-         url   : '/api/user/search/',
-         type  : "POST",
-         data  : form.serialize(), // data to be submitted
-         success: function(response){
-            const resultsContainer = $("#search-results");
-            // clear previous results
-            resultsContainer.empty();
-            // loop through results
-            for (user of response) {
-                // extract values form jquery
-                const id = user.user_id
-                const name = user.user_first_name + " " + user.user_last_name;
-                const email = user.user_email;
-
-                const html = `<div class="user" data-id="${id}">
-                                 <p class="name">${name}</a><span class="add-user"><i class="fas fa-user-plus"></i></p>
-                                 <p>${email}</p>
-                              </div>`;
-                              console.log(html);
-                resultsContainer.append(html);
-                // pray
-            }
-
-         }
-    });
-    return false;
- }) 
 
 
 

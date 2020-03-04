@@ -65,7 +65,7 @@ INSERT INTO user_account (	user_id,
 
 /* Dummy Data */
 
--- Users
+-- Students
 INSERT INTO user_account (	
 							user_id,
 							user_first_name,
@@ -85,6 +85,19 @@ INSERT INTO user_account (
 					('9', 'Cassie', 'Dean', '9@myport.ac.uk', '0', 'Away'),
 					('10', 'Cailyn', 'Chapman', '10@myport.ac.uk', '0', 'Online'),
 					('11', 'Katrina', 'Roy', '11@myport.ac.uk', '0', 'Away');
+-- Lecturers
+INSERT INTO user_account (	
+		user_id,
+		user_first_name,
+		user_last_name,
+		user_email,
+		user_password,
+		user_role,
+		user_status)
+VALUES 
+('12', 'Dustin', 'Mcgrath', 'dmcgrath@port.ac.uk', '0', 'Lecturer', 'Away'),
+('13', 'Sid', 'Schaefer', 'sschaefer@port.ac.uk', '0', 'Lecturer', 'Online'),
+('14', 'Khadeejah', 'Holden', 'kholden@port.ac.uk', '0', 'Lecturer', 'Busy');
 -- Relationships
 INSERT INTO user_relationship (	user_id,
 								ref_user_id,
@@ -97,5 +110,7 @@ INSERT INTO user_relationship (	user_id,
 							(1, 6, 'Saved'),
 							(1, 7, 'Saved'),
 							(1, 8, 'Saved'),
+							(1, 12, 'Saved'),
+							(1, 13, 'Saved'),
 							(1, 9, 'Saved');
 
