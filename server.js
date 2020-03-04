@@ -58,6 +58,12 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+// sorts out post query parameters
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
 
 /****
  * 

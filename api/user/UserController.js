@@ -42,16 +42,20 @@ router.get('/all', checkAccess, async (req, res) => {
     }
 });
 
-// Returns a list of users public information based on name or email query
-router.get('/search', checkAccess, async (req, res) => {
+// Search users
+// Used by the discover search column
+router.post('/search', checkAccess, async (req, res) => {
 
-    const fnameQuery = req.query.fname;
-    const lnameQuery = req.query.lname;
+    // TODO: sanitize these
+    console.log(req.body);
+
+    // get values, use empty string if one not supplied
+    const fname = req.body.fname || "";
+    const lname = req.body.lname || "";
+
+    const { rows } = await db.pool.query('SELECT user_id, user_first_name, user_last_name, user_email FROM user_account WHERE user_first_name ~* $1 AND user_last_name ~* $2', [fname, lname]);
     
-    const users = await db.searchUsers(fnameQuery, lnameQuery);
-    console.log(users);
-    res.status(200).send(users);
-
+    res.status(200).json(rows);
     
 });
 
@@ -80,7 +84,7 @@ function checkAccess(req, res, next) {
     if (req.isAuthenticated()) {
       return next(); // user allowed, proceed with request
     }
-    return res.status(403).send("Error 403 - Forbidden"); // user not allowed, terminate request
+    return res.status(403).json({error: "access denied"}); // user not allowed, terminate request
   };
 
 module.exports = router;

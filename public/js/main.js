@@ -36,7 +36,6 @@ function col2LoadDiscover() {
     // load discover into col2
     loadCol2('discover/main.html');
     // perform any functions to load dynamic content
-
 }
 $("#n2-button-discover").click(col2LoadDiscover);
 
@@ -44,6 +43,41 @@ $("#n2-button-discover").click(col2LoadDiscover);
  * Discover Column
  * - Handles loading searches from the API and displaying them.
  */
+$(document).on('submit','#user-search', function(e){
+    // stop form from submitting
+    e.preventDefault();
+    // post ajax request to API with form values
+    var form = $(this);
+    console.log(form.serialize());
+    $.ajax({ 
+         url   : '/api/user/search/',
+         type  : "POST",
+         data  : form.serialize(), // data to be submitted
+         success: function(response){
+            const resultsContainer = $("#search-results");
+            // clear previous results
+            resultsContainer.empty();
+            // loop through results
+            for (user of response) {
+                // extract values form jquery
+                console.log(user);
+                const id = user.user_id
+                const name = user.user_first_name + " " + user.user_last_name;
+                const email = user.user_email;
+
+                const html = `<div class="user" data-id="${id}">
+                                 <p class="name">${name}</a><span class="add-user"><i class="fas fa-user-plus"></i></p>
+                                 <p>${email}</p>
+                              </div>`;
+                              console.log(html);
+                resultsContainer.append(html);
+                // pray
+            }
+
+         }
+    });
+    return false;
+ }) 
 
 
 

@@ -5,6 +5,7 @@ const pool = new Pool({
     statement_timeout: 5000,
     host: 'localhost'
 });
+module.exports.pool = pool;
 
 // USERS
 //Not sure how to insert a query or even if we'll end up using this method of accessing the DB but these queries can be used no matter what we do
