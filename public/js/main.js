@@ -15,18 +15,12 @@ $(function() {
  *  -- Handles the column format and loading the html ect.
  */
 
- // loads html into col2 from the public/html/col2
-function loadCol2(dir) {
-    $('#main-col2').load(`static/html/col2/${dir}`, function() {
-        console.log('Column two updated.');
-    });
-}
-
 // conversations
 function col2LoadConversations() {
     // load discover into col2
-    loadCol2('conversations/main.html');
-    // load all of the users conversations
+    $('#main-col2').load(`static/html/col2/conversations/main.html`, function() {
+        // perform any functions to load dynamic content
+    });
 
 }
 $("#n2-button-conversations").click(col2LoadConversations);
@@ -34,10 +28,57 @@ $("#n2-button-conversations").click(col2LoadConversations);
 // discover
 function col2LoadDiscover() {
     // load discover into col2
-    loadCol2('discover/main.html');
-    // perform any functions to load dynamic content
+    $('#main-col2').load(`static/html/col2/discover/main.html`, function() {
+        // perform any functions to load dynamic content
+    });
 }
 $("#n2-button-discover").click(col2LoadDiscover);
+
+// relationships (same for lecturers/students/blocked, will just load different content)
+function col2LoadRelationships(event) {
+
+    // display the relationships column
+    $('#main-col2').load(`static/html/col2/relationships.html`, function() {
+
+        var result = null;
+        const titleElem = $("#relationships-header");
+
+        if (event.data.type_of_relationship === "Lecturers") {
+
+            titleElem.text("Saved Lecturers");
+            /*$.get( "/api/user/relationships/lecturers", function( data ) {
+                result = data;
+            });*/
+
+        } else if (event.data.type_of_relationship === "Saved") {
+        
+            titleElem.text("Saved Students");
+            /*$.get( "/api/user/relationships/saved", function( data ) {
+                result = data;
+            });*/
+
+        } else if (event.data.type_of_relationship === "Blocked") {
+        
+            titleElem.text("Blocked Users");
+            /*$.get( "/api/user/relationships/blocked", function( data ) {
+                result = data;
+            });*/
+
+        }
+
+        if (result) {
+
+            // TODO: add the results to the page
+
+        } else {
+            //alert("error: there was a problem loading your relationships");
+        }
+    });
+
+}
+$("#n2-button-saved-students").click({type_of_relationship: "Saved"}, col2LoadRelationships);
+$("#n2-button-saved-lecturers").click({type_of_relationship: "Lecturers"}, col2LoadRelationships);
+$("#n2-button-blocked").click({type_of_relationship: "Blocked"}, col2LoadRelationships);
 
 /****
  * Discover Column
@@ -48,7 +89,6 @@ $(document).on('submit','#user-search', function(e){
     e.preventDefault();
     // post ajax request to API with form values
     var form = $(this);
-    console.log(form.serialize());
     $.ajax({ 
          url   : '/api/user/search/',
          type  : "POST",
@@ -60,7 +100,6 @@ $(document).on('submit','#user-search', function(e){
             // loop through results
             for (user of response) {
                 // extract values form jquery
-                console.log(user);
                 const id = user.user_id
                 const name = user.user_first_name + " " + user.user_last_name;
                 const email = user.user_email;

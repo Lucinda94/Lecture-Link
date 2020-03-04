@@ -9,10 +9,10 @@ CREATE TABLE user_account(
 					user_role role NOT NULL DEFAULT 'Student',
 					user_status status NOT NULL);
 
-CREATE TYPE relationship as enum('Saved', 'Blocked', 'Lecturer');
+CREATE TYPE relationship as enum('Saved', 'Blocked');
 CREATE TABLE user_relationship (
-								user_id1 int REFERENCES user_account(user_id),
-								user_id2 int REFERENCES user_account(user_id),
+								user_id int REFERENCES user_account(user_id),
+								ref_user_id int REFERENCES user_account(user_id),
 								type_of_relationship relationship NOT NULL);
 
 CREATE TABLE chat_message (
@@ -44,3 +44,58 @@ CREATE TABLE live_message (
 							user_id int REFERENCES user_account(user_id) NOT NULL,
 							live_message_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 							live_message_content varchar(255) NOT NULL);
+
+/* Default Admin Credentials */
+INSERT INTO user_account (	user_id,
+							user_first_name,
+							user_last_name,
+							user_email,
+							user_password,
+							user_role,
+							user_status)
+					VALUES (
+						'0',
+						'Admin',
+						'Account',
+						'admin@example.com',
+						'$2b$10$Qthz5oJCb2F45CtEXisoUO1s3AEDrfXBDSrmNnlSo/9qH6GXHhNOW',
+						'Admin',
+						'Away'
+					);
+
+/* Dummy Data */
+
+-- Users
+INSERT INTO user_account (	
+							user_id,
+							user_first_name,
+							user_last_name,
+							user_email,
+							user_password,
+							user_status)
+					VALUES 
+					('1', 'Austin', 'Collins', 'up904254@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
+					('2', 'Alden', 'Cantrell', '2@myport.ac.uk', '0', 'Away'),
+					('3', 'Kierra', 'Gentry', '3@myport.ac.uk', '0', 'Busy'),
+					('4', 'Pierre', 'Cox', '4@myport.ac.uk', '0', 'Away'),
+					('5', 'Thomas', 'Crane', '5@myport.ac.uk', '0', 'Online'),
+					('6', 'Miranda', 'Shaffer', '6@myport.ac.uk', '0', 'Online'),
+					('7', 'Bradyn', 'Kramer', '7@myport.ac.uk', '0', 'Away'),
+					('8', 'Aiden', 'Cummings', '8@myport.ac.uk', '0', 'Busy'),
+					('9', 'Cassie', 'Dean', '9@myport.ac.uk', '0', 'Away'),
+					('10', 'Cailyn', 'Chapman', '10@myport.ac.uk', '0', 'Online'),
+					('11', 'Katrina', 'Roy', '11@myport.ac.uk', '0', 'Away');
+-- Relationships
+INSERT INTO user_relationship (	user_id,
+								ref_user_id,
+								type_of_relationship)
+							VALUES
+							(1, 2, 'Saved'),
+							(1, 3, 'Blocked'),
+							(1, 4, 'Saved'),
+							(1, 5, 'Saved'),
+							(1, 6, 'Saved'),
+							(1, 7, 'Saved'),
+							(1, 8, 'Saved'),
+							(1, 9, 'Saved');
+
