@@ -18,9 +18,16 @@ TODO:
 
 */
 
+/*
+
+Use router.get while testing results but will need changing to router.post so we can get results via ajax
+
+*/
+
+
 // Returns the users own information
 // Used for own acount page
-router.get('/', checkAccess, async (req, res) => {
+router.get('/get', checkAccess, async (req, res) => {
     const user_id = req.session.passport.user;
     try {
         const users = await db.getUser(user_id);
@@ -30,6 +37,23 @@ router.get('/', checkAccess, async (req, res) => {
         return error(res, 'Unable to get your information');
     }
 });
+// Returns another users public informaiton
+router.get('/get/:id', checkAccess, async (req, res) => {
+    try {
+        const user = await db.getUser(req.params.id);
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+
+        res.status(200).send(user);
+    } catch (err) {
+        return error(res, 'Could not fetch user');
+    }
+});
+
+function error(res, msg) {
+    res.status(500).send(msg);
+}
 
 // Returns a complete list of users
 router.get('/all', checkAccess, async (req, res) => {
@@ -58,24 +82,6 @@ router.post('/search', checkAccess, async (req, res) => {
     res.status(200).json(rows);
     
 });
-
-// Returns another users public informaiton
-router.get('/:id', checkAccess, async (req, res) => {
-    try {
-        const user = await db.getUser(req.params.id);
-        if (!user) {
-            return res.status(404).send('No user found');
-        }
-
-        res.status(200).send(user);
-    } catch (err) {
-        return error(res, 'Could not fetch user');
-    }
-});
-
-function error(res, msg) {
-    res.status(500).send(msg);
-}
 
 /****
  * Check Access // Currently just checks if user is logged in but can be changed to check user_roll aswell.

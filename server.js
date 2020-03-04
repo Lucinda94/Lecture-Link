@@ -19,24 +19,26 @@ initPassport(
   passport, 
   async email => {
     // where given 'email' get 'id' and 'password' from the database.
-    const user = await db.getUserByEmail(email);
+    const { rows } = await db.pool.query('SELECT user_id, user_password FROM user_account WHERE user_email = $1', [email]);
     var userData = null;
-    if (user.length === 1) { // check one user returned
+    if (rows.length === 1) { // check one user returned
+      user = rows[0];
       userData = {
-        id: user[0].user_id,
-        password: user[0].user_password
+        id: user.user_id,
+        password: user.user_password
       };
     }
     return userData;
   },
   async id => {
     // where given 'id' get 'password' from the database.
-    const user = await db.getUser(id);
+    const { rows } = await db.pool.query('SELECT user_id, user_password FROM user_account WHERE user_id = $1', [id]);
     var userData = null;
-    if (user.length === 1) { // check one user returned
+    if (rows.length === 1) { // check one user returned
+      user = rows[0];
       userData = {
-        id: id,
-        password: user[0].user_password
+        id: user.user_id,
+        password: user.user_password
       };
     }
     return userData;
@@ -52,7 +54,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(flash());
 app.use(session({
-  secret: "92yr82gfjkbeKLJFB9PGHR3UG", // keyboard cat -
+  secret: "92yr82gfjkbeKLJFB9PGHR3UG283y49823yruhRJKfeHERJKfweHfef3IR23HRUAKefefHfwJR38YR923fw8EFEWFHRJwfKAMXFNfwefBXFZMy4328", // keyboard cat -
   resave: false,
   saveUninitialized: false
 }))
