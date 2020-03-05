@@ -8,7 +8,8 @@
         "initpgsql": "createdb lecturelink; psql lecturelink < init.sql",
         "start": "node server.js",
         "devStart": "nodemon server.js",
-        "test": "jest"
+        "test": "jest",
+        "doc": "jsdoc -c jsdoc.json"
     },
     "dependencies": {
         "bcrypt": "^4.0.0",
@@ -32,6 +33,7 @@
         "url": "https://github.com/Lucinda94/Lecture-Link/issues"
     },
     "devDependencies": {
+        "jsdoc": "^3.6.3",
         "nodemon": "^2.0.2"
     }
 }
