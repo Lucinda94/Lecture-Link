@@ -1,25 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
     <title>JSDoc: Home</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
 <body>
-
-<div id="main">
-
-    <h1 class="page-title">Home</h1>
-
-    
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                    
+                        <h1 class="navbar-item">Documentation</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-_api_user_UserController.html">/api/user/UserController</a></li></ul><h3>Global</h3><ul><li><a href="global.html#db">db</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Title</p>
+                        <h1>Home</h1>
+                    </header>
+                    
+                    
 
 
 
@@ -44,32 +80,41 @@
 
     <section>
         <article><h1>Lecture Link</h1>
-<p>Lecturer messaging app</p>
-<h2>TODO</h2>
-<ul>
-<li>[X] Database
-<ul>
-<li>[X] ERD</li>
-<li>[X] Double check links and check for loops etc</li>
-<li>[ ] Data Dictionary</li>
-<li>[X] Create code</li>
-</ul>
-</li>
-<li>[ ] Add database support (possibly PostgreSQL or even MySQL)</li>
-<li>[ ] Add API endpoints for fetching user data (eg /api/chats/:user)
-<ul>
-<li>[ ] Add authentication for each endpoint (I'm thinking using JSON web tokens (JWT) maybe)</li>
-</ul>
-</li>
-<li>[ ] Actually make the app work</li>
-<li>[ ] Create test scripts</li>
-</ul>
-<h2>References</h2>
-<ul>
-<li>The login system:
--- https://github.com/WebDevSimplified/Nodejs-Passport-Login
--- https://www.youtube.com/watch?time_continue=125&amp;v=-RCnNyD0L-s&amp;feature=emb_logo</li>
-</ul></article>
+<p>Welcome to our documentaiton for Lecture Link</p>
+<h1>Architectural Model</h1>
+<p>Client Side Architectural Model</p>
+<pre class="prettyprint source"><code>
+
+        [      Database     ] 
+            ^           |
+            |          Data 
+          Query         |  
+            |           V  
+Server: [       API       ]       [       FILES         ]
+              |       ^             |             ^
+            Data      |         Return HTML       |
+             |   HTTP POST         |           HTTP GET
+             v       |             v             |
+Browser: [Insert data into DOM] [      Display raw HTML      ]
+
+
+</code></pre>
+<h1>File structure</h1>
+<pre class="prettyprint source"><code>-+ docs // JSDocs Documentation
+-+ api // Modules relating to the API
+    +-- chats // API Modules relating to chats
+    +-- user // API Moduals relating to user accounts
+-+ public // static content
+    +-- css
+    +-- html // static html content
+    +-- images
+    +-- js
+    +-- testing
+-+ testing
+-+ views // dynamic html content
+    +-- pages // full applicaiton pages
+    +-- partials // partial html used to build full applicaiton pages
+</code></pre></article>
     </section>
 
 
@@ -77,19 +122,24 @@
 
 
 
-</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-_api_user_UserController.html">/api/user/UserController</a></li></ul><h3>Global</h3><ul><li><a href="global.html#db">db</a></li><li><a href="global.html#express">express</a></li></ul>
-</nav>
 
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Mar 05 2020 01:31:53 GMT+0000 (Greenwich Mean Time)
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Mar 05 2020 02:19:47 GMT+0000 (Greenwich Mean Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
 </footer>
 
-<script> prettyPrint(); </script>
+
+<script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>
 </html>

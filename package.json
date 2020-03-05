@@ -33,6 +33,7 @@
         "url": "https://github.com/Lucinda94/Lecture-Link/issues"
     },
     "devDependencies": {
+        "better-docs": "^1.4.7",
         "jsdoc": "^3.6.3",
         "nodemon": "^2.0.2"
     }

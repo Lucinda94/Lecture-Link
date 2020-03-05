@@ -13,6 +13,7 @@
     "opts": {
       "recurse": true,
       "destination": "./docs/",
-      "readme": "./readme.md"
+      "readme": "./docs/readme.md",
+      "template": "node_modules/better-docs"
     }
 }
