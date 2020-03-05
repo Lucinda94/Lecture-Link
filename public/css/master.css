@@ -432,7 +432,7 @@ body {
   margin: 0;
   padding: 10px;
 }
-#column-discover .user {
+.user {
   position: relative;
   width: calc(100% - 20px);
   margin: 10px;
@@ -441,25 +441,37 @@ body {
   overflow: hidden;
   max-width: 300px;
 }
-#column-discover .user.open { /* Styles for the selected user */
+
+/****
+* Relationships columns
+*/
+#relationships-header {
+  padding: 10px 10px 0 10px;
+  margin: 0;
+}
+
+/****
+* User cards / use by all the relaionships columns
+*/
+.user.open { /* Styles for the selected user */
 
 }
-#column-discover .user p {
+.user p {
   padding: 10px;
   margin: 0;
   width: calc(100% - 20px);
 }
-#column-discover .user p.name {
+.user p.name {
   background-color: #999;
   color: #fff;
 }
-#column-discover .user.lecturer p.name {
+.user.lecturer p.name {
   background-color: #f45a00;
 }
-#column-discover .user .add-user {
+.user .add-user {
   margin-left: 5px;
 }
-#column-discover .search-end {
+.search-end {
   text-align: center;
   color: #8c9093;
   font-size: 14px;

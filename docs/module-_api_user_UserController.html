@@ -44,7 +44,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-_api_user_UserController.html">/api/user/UserController</a></li><li><a href="module-_frontend_main.html">/frontend/main</a></li></ul><h3>Global</h3><ul><li><a href="global.html#db">db</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-_api_user_UserController.html">/api/user/UserController</a></li><li><a href="module-_frontend_main.html">/frontend/main</a></li></ul><h3>Events</h3><ul><li><a href="module-_frontend_main.html#~event:Click">Click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#db">db</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -591,7 +591,7 @@
         <p class="tag-source">
             <a href="api_user_UserController.js.html" class="button">View Source</a>
             <span>
-                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line80">line 80</a>
+                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line82">line 82</a>
             </span>
         </p>
     
@@ -792,7 +792,7 @@
         <p class="tag-source">
             <a href="api_user_UserController.js.html" class="button">View Source</a>
             <span>
-                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line94">line 94</a>
+                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line97">line 97</a>
             </span>
         </p>
     
@@ -993,7 +993,7 @@
         <p class="tag-source">
             <a href="api_user_UserController.js.html" class="button">View Source</a>
             <span>
-                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line66">line 66</a>
+                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line68">line 68</a>
             </span>
         </p>
     
@@ -1395,7 +1395,7 @@
         <p class="tag-source">
             <a href="api_user_UserController.js.html" class="button">View Source</a>
             <span>
-                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line46">line 46</a>
+                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line47">line 47</a>
             </span>
         </p>
     
@@ -1445,9 +1445,7 @@
     
     
     <div class="description">
-        <p>API endpoint to search users by first and last name.
-POST -&gt; /api/user/search?fname=j&amp;lname=doe
-RESULT -&gt; [{user_id: 1, user_first_name: &quot;John&quot;, user_last_name: &quot;doe&quot;, user_email: &quot;johndoe＠example.com&quot;}]</p>
+        <p>API endpoint to search users by first and last name.</p>
     </div>
     
 
@@ -1598,7 +1596,7 @@ RESULT -&gt; [{user_id: 1, user_first_name: &quot;John&quot;, user_last_name: &q
         <p class="tag-source">
             <a href="api_user_UserController.js.html" class="button">View Source</a>
             <span>
-                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line112">line 112</a>
+                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line115">line 115</a>
             </span>
         </p>
     
@@ -1622,6 +1620,14 @@ RESULT -&gt; [{user_id: 1, user_first_name: &quot;John&quot;, user_last_name: &q
 
 
 
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>POST -> /api/user/search?fname=j&amp;lname=doe
+RESULT -> [{user_id: 1, user_first_name: "John", user_last_name: "doe", user_email: "johndoe&amp;#65312;example.com"}]</code></pre>
+    
 
 
 </div>
@@ -1799,7 +1805,7 @@ RESULT -&gt; [{user_id: 1, user_first_name: &quot;John&quot;, user_last_name: &q
         <p class="tag-source">
             <a href="api_user_UserController.js.html" class="button">View Source</a>
             <span>
-                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line149">line 149</a>
+                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line153">line 153</a>
             </span>
         </p>
     
@@ -1975,7 +1981,7 @@ RESULT -&gt; [{user_id: 1, user_first_name: &quot;John&quot;, user_last_name: &q
         <p class="tag-source">
             <a href="api_user_UserController.js.html" class="button">View Source</a>
             <span>
-                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line140">line 140</a>
+                <a href="api_user_UserController.js.html">api/user/UserController.js</a>, <a href="api_user_UserController.js.html#line144">line 144</a>
             </span>
         </p>
     
@@ -2025,7 +2031,7 @@ RESULT -&gt; [{user_id: 1, user_first_name: &quot;John&quot;, user_last_name: &q
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Mar 05 2020 14:36:18 GMT+0000 (Greenwich Mean Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Mar 05 2020 14:55:19 GMT+0000 (Greenwich Mean Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

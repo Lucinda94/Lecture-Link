@@ -3,11 +3,11 @@
  * 
  * @module /frontend/main
  */
+
+// 
 $(function() {
-    
     // Load the column two default.
     col2LoadConversations();
-
 });
 
 /**
@@ -32,8 +32,9 @@ function col2LoadConversations() {
 }
 $("#n2-button-conversations").click(col2LoadConversations);
 
-/****
- * Discover
+/**
+ * Loads the discover column into column 2
+ * @function
  */
 function col2LoadDiscover() {
     // load discover into col2
@@ -43,8 +44,8 @@ function col2LoadDiscover() {
 }
 $("#n2-button-discover").click(col2LoadDiscover);
 
-/**
- * 
+/** 
+ * Updates the search results in the discver column when 'Update Results' button is clicked.
  */
 $(document).on('submit','#user-search', function(e){
     // stop form from submitting
@@ -72,9 +73,7 @@ $(document).on('submit','#user-search', function(e){
                               </div>`;
                               console.log(html);
                 resultsContainer.append(html);
-                // pray
             }
-
          }
     });
     return false;
@@ -89,37 +88,41 @@ function col2LoadRelationships(event) {
     col2Load(`relationships.html`, function() {
         var result = null;
         const titleElem = $("#relationships-header");
+        const resultsContainer = $("#relationships-results");
+        var apiUrl = null;
 
+        // Get the api url to call and update the title.
         if (event.data.type_of_relationship === "Lecturers") {
-
             titleElem.text("Saved Lecturers");
-            /*$.get( "/api/user/relationships/lecturers", function( data ) {
-                result = data;
-            });*/
-
+            apiUrl = "/api/user/relationships/lecturers";
         } else if (event.data.type_of_relationship === "Saved") {
-        
             titleElem.text("Saved Students");
-            /*$.get( "/api/user/relationships/saved", function( data ) {
-                result = data;
-            });*/
-
+            apiUrl = "/api/user/relationships/saved";
         } else if (event.data.type_of_relationship === "Blocked") {
-        
             titleElem.text("Blocked Users");
-            /*$.get( "/api/user/relationships/blocked", function( data ) {
-                result = data;
-            });*/
-
+            apiUrl = "/api/user/relationships/blocked";
         }
 
-        if (result) {
-
-            // TODO: add the results to the page
-
-        } else {
-            //alert("error: there was a problem loading your relationships");
-        }
+        // get users from the api
+        $.get(apiUrl, function( users ) {
+            if (users) {
+                // display each user
+                for (user of users) {
+                    // extract values form jquery
+                    const id = user.user_id
+                    const name = user.user_first_name + " " + user.user_last_name;
+                    const email = user.user_email;
+                    const lecturerClass = (user.user_role === "Lecturer") ? " lecturer" : "";
+                    const html = `<div class="user${lecturerClass}" data-id="${id}">
+                                    <p class="name">${name}</a><span class="add-user"><i class="fas fa-user-minus"></i></p>
+                                    <p>${email}</p>
+                                </div>`;
+                    resultsContainer.append(html);
+                }
+            } else {
+                alert("error: there was a problem loading your relationships");
+            }
+        });
     });
 
 }
