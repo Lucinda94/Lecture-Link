@@ -26,7 +26,7 @@ const db = require('../../postgres-db');
 
 /**
  * API endpoint to get the logged in user.
- * @name /api/user/get
+ * @name api/user/get
  * @function
  * @param {string} path - Express path.
  * @param {function} checkAccess  - Checks if the user is logged in.
@@ -43,9 +43,10 @@ router.get('/get', checkAccess, async (req, res) => {
         return error(res, 'Unable to get your information');
     }
 });
+
 /**
  * API endpoint to get a specific user.
- * @name /api/user/get/:id
+ * @name api/user/get/:id
  * @function
  * @param {string} path - Express path.
  * @param {function} checkAccess  - Checks if the user is logged in.
@@ -63,23 +64,24 @@ router.get('/get/:id', checkAccess, async (req, res) => {
         return error(res, 'Could not fetch user');
     }
 });
+
 /**
  * API endpoint to get a users 'Saved Student' relationships
- * @name /api/user/get
+ * @name api/relationships/saved
  * @function
  * @param {string} path - Express path.
  * @param {function} checkAccess  - Checks if the user is logged in.
  * @param {callback} middleware - Express middleware.
  */
 router.get('/relationships/saved', checkAccess, async (req, res) => {
-    // Get the current user from passport (middleware)
     const user_id = req.session.passport.user;
     const { rows } = await db.pool.query('SELECT user_account.user_id, user_account.user_first_name, user_account.user_last_name, user_account.user_email, user_account.user_role, user_relationship.type_of_relationship FROM user_relationship INNER JOIN user_account ON (user_relationship.ref_user_id = user_account.user_id) WHERE user_account.user_role = $1 AND user_relationship.type_of_relationship = $2 AND user_relationship.user_id = $3;', ["Student", "Saved", user_id]);
     res.status(200).json(rows);
 });
+
 /**
  * API endpoint to get a users 'Blocked Users' relationships
- * @name /api/user/get
+ * @name api/relationships/blocked
  * @function
  * @param {string} path - Express path.
  * @param {function} checkAccess  - Checks if the user is logged in.
@@ -91,9 +93,10 @@ router.get('/relationships/blocked', checkAccess, async (req, res) => {
     const { rows } = await db.pool.query('SELECT user_account.user_id, user_account.user_first_name, user_account.user_last_name, user_account.user_email, user_account.user_role, user_relationship.type_of_relationship FROM user_relationship INNER JOIN user_account ON (user_relationship.ref_user_id = user_account.user_id) WHERE user_relationship.type_of_relationship = $1 AND user_relationship.user_id = $2;', ["Blocked", user_id]);
     res.status(200).json(rows);
 });
+
 /**
  * API endpoint to get a users 'Saved Lecturers' relationships
- * @name /api/user/get
+ * @name api/relationships/lecturers
  * @function
  * @param {string} path - Express path.
  * @param {function} checkAccess  - Checks if the user is logged in.
@@ -109,10 +112,17 @@ router.get('/relationships/add', checkAccess, async (req, res) => {
 
 });
 
-/****
- * Search Users API
+/**
+ * API endpoint to search users by first and last name.
+ * @name api/users/search
+ * @function
+ * @param {string} path - Express path.
+ * @param {function} checkAccess  - Checks if the user is logged in.
+ * @param {callback} middleware - Express middleware.
+ * @example 
+ * POST -> /api/user/search?fname=j&lname=doe
+ * RESULT -> [{user_id: 1, user_first_name: "John", user_last_name: "doe", user_email: "johndoe&#65312;example.com"}]
  */
-// Used by the discover search column
 router.post('/search', checkAccess, async (req, res) => {
 
     // TODO: sanitize these
