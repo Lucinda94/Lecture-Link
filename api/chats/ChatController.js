@@ -21,11 +21,35 @@ router.get('/get/:id', checkAccess, async (req, res) => {
 });
 
 // send a message to a user eg. POST /api/chats/RECEIVER_ID with the sender id and content in the request body
-router.post('/:id', checkAccess, async (req, res) => {
+router.post('/send/:id', checkAccess, async (req, res) => {
+    const user_id = req.session.passport.user.toString();
+    console.log(user_id);
+    const user_2_id = req.params.id;
+    const message = req.body.message;
+    var message_id;
+
+    // send the message
     try {
-        const msg = await db.sendMessage(req.params.id, req.body.receiver, req.body.content);
+        const { rows } = await db.pool.query('INSERT INTO chat_message (sender_id, receiver_id, message_content, message_seen) VALUES ($1, $2, $3, $4) RETURNING message_id',[user_id, user_2_id, message, false]);
+        console.log(rows);
+        message_id = rows[0].message_id;
     } catch (err) {
+        console.log(err);
         return res.status(500).send('Could not send chat message');
+    }
+
+    // get the message
+    try {
+        const { rows } = await db.pool.query("SELECT user_account.user_id, user_account.user_first_name, user_account.user_last_name, chat_message.* FROM chat_message INNER JOIN user_account ON (chat_message.sender_id = user_account.user_id) WHERE chat_message.message_id = $1", [message_id]);
+        if (rows.length === 1){
+            rows[0].outbound = true;
+            res.status(200).json(rows[0]);
+        } else {
+            return res.status(500).send('Error getting message from database.');
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('Error getting message from database.');
     }
 });
 

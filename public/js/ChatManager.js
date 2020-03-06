@@ -4,6 +4,8 @@
  * @module ChatManager
  */
 
+var _open_conversation = null;
+
 /**
  * If a user card is clicked, get the id data attribute and load the chat column for that id.
  */
@@ -38,7 +40,7 @@ function loadChatColumn(participant_2_id) {
  */
 function displayMessages(participant_2_id) {
     const messages = getMessages(participant_2_id);
-    console.log(messages);
+    _open_conversation = participant_2_id;
     for (message of messages) {
         appendMessageToChat(message);
     }
@@ -116,17 +118,38 @@ function getMessages(participant_2_id) {
  * @param {object} message
  * @see appendMessageToChat
  */
-function sendMessage(participant_2_id, message) {
-
-    // TODO: post message to api
-
-    if (success) {
-        appendMessageToChat(message, true);
-    } else {
-        error("Unable to send message, please try again.");
-    }
+function sendMessage(participant_2_id, message_to_send) {
+    console.log(message_to_send);
+    $.ajax({ 
+        url   : '/api/chats/send/' + participant_2_id,
+        type  : "POST",
+        data  : {message: message_to_send}, // data to be submitted
+        success: function(response){
+           const chatContainer = $("#search-results");
+           if (!response.error) {
+            const message = response;
+            console.log(message);
+            appendMessageToChat(message);
+           } else {
+            error(response.error);
+           }
+        },
+        error: function (e) {
+            error("Unable to send message, please try again.", e);
+        }
+    });
 
 }
+
+$(document).on('submit','#new-message', function(e){
+    // stop form from submitting
+    e.preventDefault();
+    // get message
+    let message = $('#chat-send-message').val();
+    if (message != "") {
+        sendMessage(_open_conversation, message);
+    }
+ }) 
 
 /***
  * Scrolls the chat container down the the bottom
