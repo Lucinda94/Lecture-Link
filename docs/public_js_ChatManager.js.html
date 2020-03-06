@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: public/js/ChatManager.js</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                    
+                        <h1 class="navbar-item">Documentation</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-_api_user_UserController.html">/api/user/UserController</a></li><li><a href="module-_frontend_main.html">/frontend/main</a></li><li><a href="module-ChatManager.html">ChatManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#db">db</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>public/js/ChatManager.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Client-side controller, manages displaying chat related content in the DOM and communicates with the API.
+ * 
+ * @module ChatManager
+ */
+
+
+
+/**
+ * Displays the messages between the logged in and another user.
+ * @param {integer} participant_2_id - The second users id (who they are chatting with)
+ */
+function loadChatColumn(participant_2_id) {
+
+    // load the chat html into column three
+    $('#main-col3').load(`static/html/col3/chat.html`, function() {
+
+        // once complete, display messages
+        displayMessages(participant_2_id);
+
+    });
+    
+}
+
+/**
+ * Displays the messages of a specific user in the chat container
+ * @param {integer} participant_2_id - The id of the other user in the conversation
+ */
+function displayMessages(participant_2_id) {
+    const messages = getMessages(participant_2_id);
+    for (message of messages) {
+        appendMessageToChat(message);
+    }
+}
+
+/**
+ * Appends a message to the bottom of the chat container
+ * @param {object} message - The message data
+ */
+function appendMessageToChat(message) {
+
+    /* Format expected:
+    let message = {
+                message_id: 1,
+                sender_id: 1,
+                message_sender_name: "John Doe",
+                message_time: "123:123",
+                message_seen: false,
+                message_content: "this is my message",
+                outbound: false
+                };
+    */
+
+    const outboundClass = message.outbound ? " outbound" : "";
+    const seen = message.message_seen ? " | Seen" : "";
+    // format the message in html
+    let html = `
+    
+        &lt;div class="message-wrap">
+        &lt;div class="message${outboundClass}" data-message-id="${message.message_id}">
+            &lt;p class="mes-party">${message.message_sender_name}${seen}&lt;/p>
+            &lt;div class="mes-bubble">
+                &lt;div class="mes-text">
+                &lt;p>${message.message_content}&lt;/p>
+                &lt;/div>
+            &lt;/div>
+            &lt;time class="mes-info">${message.message_time}&lt;/time>
+            &lt;/div>
+        &lt;/div>
+    
+    `;
+    // append the message to the chat container
+    $("#messages").append(html);
+    // scroll down to show new message
+    scrollBottomOfChat();
+
+}
+
+/**
+ * Gets the messages between two from the api
+ * @param {integer} participant_2_id - ID of the second participant
+ * @returns {array} messages - Returns an array of message objects
+ */
+function getMessages(participant_2_id) {
+
+    var messages = [{outbound: true}, {outbound: false}, {outbound: true}, {outbound: false}];
+
+    // TODO: get messages
+
+    return messages;
+}
+
+/**
+ * Sends a message to the API and appends it to the chat.
+ * @param {integer} participant_2_id 
+ * @param {object} message
+ * @see appendMessageToChat
+ */
+function sendMessage(participant_2_id, message) {
+
+    // TODO: post message to api
+
+    if (success) {
+        appendMessageToChat(message, true);
+    } else {
+        error("Unable to send message, please try again.");
+    }
+
+}
+
+/***
+ * Scrolls the chat container down the the bottom
+ */
+function scrollBottomOfChat() {
+    var chat = $('#messages');
+    var height = chat[0].scrollHeight;
+    chat.scrollTop(height);
+}
+
+/**
+ * Displays an error message to the user | logs error information
+ * @param {string} message -- The error message to display
+ * @param {error} error -- Optional: Pass error to be logged if catching errors.
+ */
+function error(message, error) {
+    // TODO: display message somewhere
+    if (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Mar 06 2020 00:21:53 GMT+0000 (Greenwich Mean Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

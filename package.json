@@ -6,10 +6,12 @@
     "scripts": {
         "setup": "npm install && npm run initpgsql",
         "initpgsql": "createdb lecturelink; psql lecturelink < init.sql",
+        "loadDummyData": "psql lecturelink < dummydata.sql",
         "start": "node server.js",
         "devStart": "nodemon server.js",
         "test": "jest",
-        "doc": "jsdoc -c jsdoc.json"
+        "doc": "jsdoc -c jsdoc.json",
+        "demo": "npm run setup && npm run loadDummyData && npm run start"
     },
     "dependencies": {
         "bcrypt": "^4.0.0",
