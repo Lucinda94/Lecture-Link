@@ -15,10 +15,10 @@ const db = require('./postgres-db.js');
  */
 const initPassport = require('./passport-config');
 /**
- * Connect passport to the database 
+ * Connect passport to the database
  */
 initPassport(
-  passport, 
+  passport,
   async email => {
     // where given 'email' get 'id' and 'password' from the database.
     const { rows } = await db.pool.query('SELECT user_id, user_password FROM user_account WHERE user_email = $1', [email]);
@@ -67,12 +67,12 @@ var bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
 
 /****
- * 
+ *
  * Login/Register/Logout Routes
- * 
+ *
  */
 // Returns login page, only if they are not logged in
 app.get('/login', checkNotLoggedIn, (req, res) => {
@@ -172,3 +172,35 @@ app.listen(8080, (err) => {
     if (err) console.log('Could not start server', err);
     console.log('Server listening on port 8080');
 });
+
+/****
+  * Sending verification emails
+  */
+
+function sendVerificationEmail (user_email){
+    var nodemailer = require('nodemailer');
+
+    var transporter = nodemailer.createTransport({
+    	service: 'gmail',
+    	auth: {
+        userEmail: 'ouremail@gmail.com',
+        password: 'ourpassword'
+      }
+    });
+
+    var options = {
+    	sender: 'ouremail@gmail.com',
+      receiver: user_email,
+      subject: 'Verification Email for Lecture Link',
+      content: '4 digit code here'
+    };
+
+    transporter.sendMail(options, function(error, info){
+    	if (error) {
+    	   console.log(error)
+    	}
+    	else {
+    		console.log('Email sent' + info);
+    		}
+    });
+  }

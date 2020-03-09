@@ -135,36 +135,3 @@ function col2LoadRelationships(event) {
 $("#n2-button-saved-students").click({type_of_relationship: "Saved"}, col2LoadRelationships);
 $("#n2-button-saved-lecturers").click({type_of_relationship: "Lecturers"}, col2LoadRelationships);
 $("#n2-button-blocked").click({type_of_relationship: "Blocked"}, col2LoadRelationships);
-
-
-/*
-  * Sending verification emails
-  */
-
-function sendVerificationEmail (user_email){
-    var nodemailer = require('nodemailer');
-
-    var transporter = nodemailer.createTransport({
-    	service: 'gmail',
-    	auth: {
-        userEmail: 'ouremail@gmail.com',
-        password: 'ourpassword'
-      }
-    });
-
-    var options = {
-    	sender: 'ouremail@gmail.com',
-      receiver: user_email,
-      subject: 'Verification Email for Lecture Link',
-      content: '4 digit code here'
-    };
-
-    transporter.sendMail(options, function(error, info){
-    	if (error) {
-    	   console.log(error)
-    	}
-    	else {
-    		console.log('Email sent' + info);
-    		}
-    });
-  }
