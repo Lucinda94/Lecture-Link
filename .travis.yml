@@ -1,4 +1,19 @@
 language: node_js
 node_js:
+  - node
   - 12.13.1
->>>>>>> a7d6e39086e9bdc335d25851e90ffa1fa244330c
+
+cache: npm
+
+branches:
+  except: [".."]
+  only: ["master"]
+
+
+# jobs:
+#   include: 
+#     - stage: test
+#       script: ./test 1
+#       script: ./test 2
+#     - stage: deploy
+#       script: ./deploy
