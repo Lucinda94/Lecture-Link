@@ -188,7 +188,7 @@ app.listen(8080, (err) => {
 /****
   * Get user data to popuate table
   */
-async userDetails => {
+async getUserDetails(id) => {
   app.get('/accountInfo', function(req,res){
     const { rows } = await db.pool.query('SELECT user_email, user_fName, user_Lname, user_password FROM user_account WHERE user_id = $1', [id]);
     var accountDetails = null;
