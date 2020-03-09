@@ -133,8 +133,8 @@ app.get('/', checkLoggedIn, function(req, res) {
   * Returns the account page
   */
 app.get('/account', checkLoggedIn, (req, res) => {
-res.render('pages/account');
-
+res.render('pages/account')
+});
 
 
 /****
