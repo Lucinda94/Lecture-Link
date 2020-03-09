@@ -190,7 +190,7 @@ app.listen(8080, (err) => {
   */
 function getUserDetails(id){
   app.get('/accountInfo', function(req,res){
-    const { rows } = await db.pool.query('SELECT user_email, user_fName, user_Lname, user_password FROM user_account WHERE user_id = $1', [id]);
+    const { rows } = db.pool.query('SELECT user_email, user_fName, user_Lname, user_password FROM user_account WHERE user_id = $1', [id]);
     var accountDetails = null;
     if (rows.length === 1) { // check one user returned
       user = rows[0];
