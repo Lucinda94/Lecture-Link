@@ -19,3 +19,5 @@ Lecturer messaging app
 -- https://github.com/WebDevSimplified/Nodejs-Passport-Login
 -- https://www.youtube.com/watch?time_continue=125&v=-RCnNyD0L-s&feature=emb_logo
 
+- Email sending with node:
+-- https://www.w3schools.com/nodejs/nodejs_email.asp

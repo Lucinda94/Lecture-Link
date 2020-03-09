@@ -1,10 +1,10 @@
 
 /**
- * 
+ *
  * @module /frontend/main
  */
 
-// 
+//
 $(function() {
     // Load the column two default.
     col2LoadConversations();
@@ -18,7 +18,7 @@ $(function() {
 function col2Load(dir, callback) {
     $('#main-col2').load(`static/html/col2/${dir}`, callback);
 }
-  
+
 /**
  * Loads conversations into column two
  * @function
@@ -44,7 +44,7 @@ function col2LoadDiscover() {
 }
 $("#n2-button-discover").click(col2LoadDiscover);
 
-/** 
+/**
  * Updates the search results in the discver column when 'Update Results' button is clicked.
  */
 $(document).on('submit','#user-search', function(e){
@@ -52,7 +52,7 @@ $(document).on('submit','#user-search', function(e){
     e.preventDefault();
     // post ajax request to API with form values
     var form = $(this);
-    $.ajax({ 
+    $.ajax({
          url   : '/api/user/search/',
          type  : "POST",
          data  : form.serialize(), // data to be submitted
@@ -77,7 +77,7 @@ $(document).on('submit','#user-search', function(e){
          }
     });
     return false;
- }) 
+ })
 
 /****
  * Relationships

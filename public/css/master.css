@@ -41,7 +41,17 @@ body {
   top: -5px; /* aligning with icon */
   padding-right: 15px;
 }
-
+#log-out {
+  position: absolute;
+  top: 0;
+  right: 200px;
+  padding: 27px 30px;
+}
+#log-out a {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+}
 /* Setting up the column structure */
 #wrap {
   display: flex;
