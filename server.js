@@ -123,8 +123,10 @@ app.get('/forgot', (req, res) => {
  */
 app.get('/', checkLoggedIn, function(req, res) {
   const isloggedIn = req.isAuthenticated();
-  app.locals.isloggedIn = isloggedIn;
-  res.render('pages/main-application');
+  console.log(isloggedIn);
+  res.render('pages/main-application', {
+    isloggedIn: isloggedIn
+  });
 });
 
 /****
