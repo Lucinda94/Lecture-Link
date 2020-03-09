@@ -122,6 +122,8 @@ app.get('/forgot', (req, res) => {
  * Returns the main application page
  */
 app.get('/', checkLoggedIn, function(req, res) {
+  const isloggedIn = req.isAuthenticated();
+  app.locals.isloggedIn = isloggedIn;
   res.render('pages/main-application');
 });
 
