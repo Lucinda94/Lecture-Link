@@ -66,6 +66,24 @@ router.get('/get/:id', checkAccess, async (req, res) => {
 });
 
 /**
+ * API endpoint add a relationship.
+ * @name api/relationships/add/:id
+ * @function
+ */
+
+ router.get('/relationships/add/:id', checkAccess, async (req, res) => {
+    const user_id = req.session.passport.user;
+    const second_user_id = req.params.id;
+    try {
+        const { rows } = await db.pool.query(`INSERT into user_relationship (user_id, ref_user_id, type_of_relationship) VALUES (${user_id}, ${second_user_id}, 'Saved'`);
+        return res.status(200).json({success: true});
+        
+    } catch (err) {
+        return res.status(500).json({success: false});
+    }
+});
+
+/**
  * API endpoint to get a users 'Saved Student' relationships
  * @name api/relationships/saved
  * @function
