@@ -129,6 +129,14 @@ app.get('/', checkLoggedIn, function(req, res) {
   });
 });
 
+/**
+  * Returns the account page
+  */
+app.get('/account', checkLoggedIn, (req, res) => {
+res.render('pages/account');
+
+
+
 /****
  * API
  */
@@ -176,6 +184,26 @@ app.listen(8080, (err) => {
     if (err) console.log('Could not start server', err);
     console.log('Server listening on port 8080');
 });
+
+/****
+  * Get user data to popuate table
+  */
+function getUserDetails(id){
+  app.get('/accountInfo', function(req,res){
+    const { rows } = db.pool.query('SELECT user_email, user_fName, user_Lname, user_password FROM user_account WHERE user_id = $1', [id]);
+    var accountDetails = null;
+    if (rows.length === 1) { // check one user returned
+      user = rows[0];
+      accountDetails = {
+        email: user.user_email,
+        firstName: user.user_fName,
+        lastName: user.user_Lname,
+        password: user.user_password
+      };
+    }
+    return accountDetails;
+  })
+}
 
 /****
   * Sending verification emails
