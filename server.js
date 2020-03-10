@@ -56,7 +56,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(flash());
 app.use(session({
-  secret: "92yr82gfjkbeKLJFB9PGHR3UG283y49823yruhRJKfeHERJKfweHfef3IR23HRUAKefefHfwJR38YR923fw8EFEWFHRJwfKAMXFNfwefBXFZMy4328", // keyboard cat -
+  secret: "92yr82gfjkbeKLJFB9PGHR3UG283y49823yruhRJKfeHERJKfweHfef3IR23HRUAKefefHfwJR38YR923fw8EFEWFHRJwfKAMXFNfwefBXFZMy4328", // keyboard cat
   resave: false,
   saveUninitialized: false
 }))
@@ -76,7 +76,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
  */
 // Returns login page, only if they are not logged in
 app.get('/login', checkNotLoggedIn, (req, res) => {
-res.render('pages/login');
+  renderEJSPage(req, res, 'pages/login');
 })
 // when the login form is submitted, passport handles the login
 app.post('/login', checkNotLoggedIn, passport.authenticate('local', {
@@ -90,7 +90,7 @@ app.get('/register', checkNotLoggedIn, (req, res) => {
  })
  // return the registration page
 app.get('/register/confirm-email', checkNotLoggedIn, (req, res) => {
-  res.render('pages/confirm-email');
+  renderEJSPage(req, res, 'pages/confirm-email');
  })
 // when the registration form is submitted
 app.post('/register', checkNotLoggedIn, async (req, res, next) => {
@@ -115,23 +115,25 @@ app.get('/logout', (req, res) => {
   res.redirect('/login'); // redirect to the login page
 })
 app.get('/forgot', (req, res) => {
-  res.render('pages/forgot-password');
+  renderEJSPage(req, res, 'pages/forgot-password');
 })
 
 /**
  * Returns the main application page
  */
 app.get('/', checkLoggedIn, function(req, res) {
-  const isloggedIn = req.isAuthenticated();
-  console.log(isloggedIn);
-  res.render('pages/main-application');
+  renderEJSPage(req, res, 'pages/main-application');
 });
 
 /**
   * Returns the account page
   */
 app.get('/account', checkLoggedIn, (req, res) => {
-res.render('pages/account')
+  renderEJSPage(req, res, 'pages/account', {
+    email: "email here",
+    firstName: "first name here",
+    lastName: "last name here"
+  })
 });
 
 
@@ -154,7 +156,7 @@ app.use('/static', express.static('public'));
  * Anything that isn't routed, show 404 page.
  */
 app.get('*', function(req, res) {
-    res.render('pages/404');
+    renderEJSPage(req, res, 'pages/404');
 });
 
 /****
@@ -182,6 +184,23 @@ app.listen(8080, (err) => {
     if (err) console.log('Could not start server', err);
     console.log('Server listening on port 8080');
 });
+
+/**
+ * Wraps the EJS render function but adds the isLoggedIn param as needed by the header.
+ * @param {callback} res - Express middleware
+ * @param {string} location - The EJS page to load
+ * @param {object} data - Optional data for the page to load
+ */
+function renderEJSPage(req, res, location, data) {
+  const isLoggedIn = req.isAuthenticated();
+  if (data) {
+    data.isLoggedIn = isLoggedIn;
+  } else {
+    data = {isLoggedIn: isLoggedIn}
+  }
+  console.log(data);
+  res.render(location, data);
+}
 
 /****
   * Get user data to popuate table

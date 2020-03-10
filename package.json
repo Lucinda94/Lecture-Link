@@ -14,7 +14,7 @@
         "demo": "npm run setup && npm run loadDummyData && npm run start"
     },
     "dependencies": {
-        "bcrypt": "^4.0.0",
+        "bcrypt": "^4.0.1",
         "body-parser": "^1.19.0",
         "ejs": "^2.5.5",
         "express": "^4.17.1",
