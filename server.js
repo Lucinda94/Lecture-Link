@@ -1,9 +1,14 @@
+/**
+ * @module Server
+ */
+
 const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
+const nodemailer = require('nodemailer');
 
 /**
  * Import the database
@@ -147,10 +152,15 @@ app.use('/api/user', UserController);
 const ChatController = require('./api/chats/ChatController');
 app.use('/api/chats', ChatController);
 
-/****
+/**
  * Serve static content
  */
 app.use('/static', express.static('public'));
+
+/**
+ * Serve the documentation. (remove in final release)
+ */
+app.use('/docs', express.static('docs'));
 
 /****
  * Anything that isn't routed, show 404 page.
@@ -177,8 +187,8 @@ function checkNotLoggedIn(req, res, next) {
   next();
 };
 
-/****
- * Start the server
+/**
+ * Start the server: tells express to listen on a port.
  */
 app.listen(8080, (err) => {
     if (err) console.log('Could not start server', err);
@@ -189,7 +199,7 @@ app.listen(8080, (err) => {
  * Wraps the EJS render function but adds the isLoggedIn param as needed by the header.
  * @param {callback} res - Express middleware
  * @param {string} location - The EJS page to load
- * @param {object} data - Optional data for the page to load
+ * @param {object} data - Optional data to pass to EJS middleware
  */
 function renderEJSPage(req, res, location, data) {
   const isLoggedIn = req.isAuthenticated();
@@ -202,9 +212,10 @@ function renderEJSPage(req, res, location, data) {
   res.render(location, data);
 }
 
-/****
-  * Get user data to popuate table
-  */
+/**
+ * Remove this?
+ * @deprecated
+ */
 function getUserDetails(id){
   app.get('/accountInfo', function(req,res){
     const { rows } = db.pool.query('SELECT user_email, user_fName, user_Lname, user_password FROM user_account WHERE user_id = $1', [id]);
@@ -222,14 +233,14 @@ function getUserDetails(id){
   })
 }
 
-/****
-  * Sending verification emails
-  */
-
+/**
+ * Emails a verificaiton code to user_email. Pushes the code to the database so it can be compared to later.
+ * @param {string} user_email - The email to send the verification email to.
+ */
 function sendVerificationEmail (user_email){
-    var nodemailer = require('nodemailer');
 
-    var transporter = nodemailer.createTransport({
+    // TODO: send email without auth (just tell them to check spam!)
+    const transporter = nodemailer.createTransport({
     	service: 'gmail',
     	auth: {
         userEmail: 'ouremail@gmail.com',
@@ -237,7 +248,8 @@ function sendVerificationEmail (user_email){
       }
     });
 
-    var options = {
+    // TODO: use a random generator to get a 4 digit code
+    const options = {
     	sender: 'ouremail@gmail.com',
       receiver: user_email,
       subject: 'Verification Email for Lecture Link',
@@ -249,7 +261,10 @@ function sendVerificationEmail (user_email){
     	   console.log(error)
     	}
     	else {
-    		console.log('Email sent' + info);
+        console.log('Email sent' + info);
+        
+        // TODO: put the code in the database somewhere
+
     		}
     });
   }
