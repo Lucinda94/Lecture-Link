@@ -133,13 +133,45 @@ app.get('/', checkLoggedIn, function(req, res) {
 /**
   * Returns the account page
   */
-app.get('/account', checkLoggedIn, (req, res) => {
+app.get('/account', checkLoggedIn, async (req, res) => {
+  const user_id = req.session.passport.user;
+  let accountDetails = await getUserDetails(user_id);
+  console.log(user_id, accountDetails)
   renderEJSPage(req, res, 'pages/account', {
-    email: "email here",
-    firstName: "first name here",
-    lastName: "last name here"
+    email: accountDetails.email,
+    firstName: accountDetails.firstName,
+    lastName: accountDetails.lastName
   })
 });
+
+/**
+  * Returns the account page
+  */
+ app.post('/account', checkLoggedIn, async (req, res) => {
+  const user_id = req.session.passport.user;
+  // TODO: verify and update account information in database
+});
+
+/**
+ * Gets the account details from the database
+ * @param {*} id 
+ * @returns {object} - Account details in an object, or returns error.
+ */
+async function getUserDetails(id) {
+  const { rows } = await db.pool.query('SELECT user_email, user_first_name, user_last_name FROM user_account WHERE user_id = $1', [id]);
+  var accountDetails = null;
+  if (rows.length === 1) { // check one user returned
+    user = rows[0];
+    accountDetails = {
+      email: user.user_email,
+      firstName: user.user_first_name,
+      lastName: user.user_last_name,
+    };
+    return accountDetails;
+  } else {
+    return {error: "Could not load account details"};
+  }
+}
 
 
 /****
@@ -210,27 +242,6 @@ function renderEJSPage(req, res, location, data) {
   }
   console.log(data);
   res.render(location, data);
-}
-
-/**
- * Remove this?
- * @deprecated
- */
-function getUserDetails(id){
-  app.get('/accountInfo', function(req,res){
-    const { rows } = db.pool.query('SELECT user_email, user_fName, user_Lname, user_password FROM user_account WHERE user_id = $1', [id]);
-    var accountDetails = null;
-    if (rows.length === 1) { // check one user returned
-      user = rows[0];
-      accountDetails = {
-        email: user.user_email,
-        firstName: user.user_fName,
-        lastName: user.user_Lname,
-        password: user.user_password
-      };
-    }
-    return accountDetails;
-  })
 }
 
 /**
