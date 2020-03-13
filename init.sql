@@ -9,6 +9,12 @@ CREATE TABLE user_account(
 					user_role role NOT NULL DEFAULT 'Student',
 					user_status status NOT NULL);
 
+CREATE TABLE ver_code(
+					user_email int REFERENCES user_account(user_email) NOT NULL,
+					ver_code varchar(4) NOT NULL,
+					PRIMARY KEY(user_email, ver_code));
+
+
 CREATE TYPE relationship as enum('Saved', 'Blocked');
 CREATE TABLE user_relationship (
 								user_id int REFERENCES user_account(user_id),

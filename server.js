@@ -259,12 +259,14 @@ function sendVerificationEmail (user_email){
       }
     });
 
-    // TODO: use a random generator to get a 4 digit code
+
+    var code = Math.floor(1000+Math.random()*9000);
+
     const options = {
     	sender: 'ouremail@gmail.com',
       receiver: user_email,
       subject: 'Verification Email for Lecture Link',
-      content: '4 digit code here'
+      content: 'Here is your verification code: ' + code
     };
 
     transporter.sendMail(options, function(error, info){
@@ -273,9 +275,11 @@ function sendVerificationEmail (user_email){
     	}
     	else {
         console.log('Email sent' + info);
-        
-        // TODO: put the code in the database somewhere
+
+
+        db.pool.query("INSERT INTO ver_code VALUES($1, $2)"[user_email, code]);
 
     		}
+
     });
   }
