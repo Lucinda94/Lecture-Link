@@ -162,18 +162,37 @@ app.get('/account', checkLoggedIn, async (req, res) => {
   var fName = req.body.fName;
   var lName = req.body.lName;
   var pass = req.body.password;
-
+  var success = true;
   if (fName){
-    db.pool.query("UPDATE user_account SET user_fName = $1 WHERE user_id = $2"[fName, user_id]);
+    try{
+          db.pool.query("UPDATE user_account SET user_fName = $1 WHERE user_id = $2"[fName, user_id]);
+    }catch{
+      success = false;
+
+
+
+    }
   }
 
   if (lName){
-        db.pool.query("UPDATE user_account SET user_lName = $1 WHERE user_id = $2"[lName, user_id]);
+    try{
+          db.pool.query("UPDATE user_account SET user_lName = $1 WHERE user_id = $2"[lName, user_id]);
+    }catch{
+      success = false;
+    }
   }
 
+
   if (pass){
-    db.pool.query("UPDATE user_account SET user_password = $1 WHERE user_id = $2"[pass, user_id]);
+    try{
+          db.pool.query("UPDATE user_account SET user_password = $1 WHERE user_id = $2"[pass, user_id]);
+    }catch{
+      success = false;
+    }
+
   }
+
+  res.redirect('/account?success='+success);
 });
 
 /**
