@@ -9,6 +9,9 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const nodemailer = require('nodemailer');
+// sockets
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 /**
  * Import the database
@@ -73,6 +76,13 @@ app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
+
+/****
+ * Sockets
+ */
+io.on('connection', () =>{
+  console.log('a user is connected')
+ })
 
 /****
  *
