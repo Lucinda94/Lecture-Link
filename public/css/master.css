@@ -377,8 +377,8 @@ body {
   padding-left: 10px;
 }
 
-/****
-* Confirm email page
+/*
+ Confirm email page
 */
 #confirm-email {
   max-width: calc(400px - 10px);
@@ -486,4 +486,9 @@ body {
   color: #8c9093;
   font-size: 14px;
   margin-top: 20px;
+}
+
+/* Account page styling */
+#currentInfo {
+  text-align: left;
 }
