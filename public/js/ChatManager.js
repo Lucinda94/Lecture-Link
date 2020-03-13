@@ -141,6 +141,13 @@ function sendMessage(participant_2_id, message_to_send) {
 
 }
 
+function updateMessages() {
+    $("#messages").empty()
+    displayMessages(_open_conversation);
+}
+
+setInterval(updateMessages, 500);
+
 $(document).on('submit','#new-message', function(e){
     // stop form from submitting
     e.preventDefault();
