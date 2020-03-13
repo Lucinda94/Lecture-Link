@@ -163,9 +163,17 @@ app.get('/account', checkLoggedIn, async (req, res) => {
   var lName = req.body.lName;
   var pass = req.body.password;
 
-//SEND TO DATABASE
+  if (fName){
+    db.pool.query("UPDATE user_account SET user_fName = $1 WHERE user_id = $2"[fName, user_id]);
+  }
 
-  db.pool.query("UPDATE user_account SET user_fName = $1, user_lName = $2, user_password = $3 WHERE user_id = $4",[fName, lName, pass, user_id]);
+  if (lName){
+        db.pool.query("UPDATE user_account SET user_lName = $1 WHERE user_id = $2"[lName, user_id]);
+  }
+
+  if (pass){
+    db.pool.query("UPDATE user_account SET user_password = $1 WHERE user_id = $2"[pass, user_id]);
+  }
 });
 
 /**
