@@ -3,11 +3,11 @@ node_js:
   - node
   - 12.13.1
 
-cache: npm
+#cache: npm
 
-branches:
-  except: [".."]
-  only: ["master"]
+#branches:
+#  except: [".."]
+#  only: ["master"]
 
 
 # jobs:
