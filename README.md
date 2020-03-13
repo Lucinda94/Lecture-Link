@@ -1,4 +1,4 @@
-# Lecture Link
+# Lecture Link [![Build Status](https://travis-ci.com/Lucinda94/Lecture-Link.svg?branch=master)](https://travis-ci.com/Lucinda94/Lecture-Link)
 Lecturer messaging app
 
 ## TODO
