@@ -5,6 +5,7 @@
  */
 
 var _open_conversation = null;
+let _updateMessagesInterval = null;
 
 /**
  * If a user card is clicked, get the id data attribute and load the chat column for that id.
@@ -44,6 +45,8 @@ function displayMessages(participant_2_id) {
     for (message of messages) {
         appendMessageToChat(message);
     }
+    clearInterval(_updateMessagesInterval);
+    _updateMessagesInterval = setInterval(updateMessages, 1000);
 }
 
 /**
@@ -142,11 +145,16 @@ function sendMessage(participant_2_id, message_to_send) {
 }
 
 function updateMessages() {
-    $("#messages").empty()
-    displayMessages(_open_conversation);
+    const container = $("#messages");
+    if (container.length) {
+        $("#messages").empty()
+        displayMessages(_open_conversation);
+    } else {
+        clearInterval(updateMessagesInterval);
+    }
 }
 
-setInterval(updateMessages, 500);
+let updateMessagesInterval = setInterval(updateMessages, 500);
 
 $(document).on('submit','#new-message', function(e){
     // stop form from submitting

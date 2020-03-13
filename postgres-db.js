@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 const pool = new Pool({
     database: 'lecturelink',
     statement_timeout: 5000,
-    host: '/var/run/postgresql'
+    host: 'localhost'
 });
 module.exports.pool = pool;
 
