@@ -1,9 +1,17 @@
+/**
+ * @module Server
+ */
+
 const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
+const nodemailer = require('nodemailer');
+// sockets
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 /**
  * Import the database
@@ -56,7 +64,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(flash());
 app.use(session({
-  secret: "92yr82gfjkbeKLJFB9PGHR3UG283y49823yruhRJKfeHERJKfweHfef3IR23HRUAKefefHfwJR38YR923fw8EFEWFHRJwfKAMXFNfwefBXFZMy4328", // keyboard cat -
+  secret: "92yr82gfjkbeKLJFB9PGHR3UG283y49823yruhRJKfeHERJKfweHfef3IR23HRUAKefefHfwJR38YR923fw8EFEWFHRJwfKAMXFNfwefBXFZMy4328", // keyboard cat
   resave: false,
   saveUninitialized: false
 }))
@@ -70,13 +78,20 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 
 /****
+ * Sockets
+ */
+io.on('connection', () =>{
+  console.log('a user is connected')
+ })
+
+/****
  *
  * Login/Register/Logout Routes
  *
  */
 // Returns login page, only if they are not logged in
 app.get('/login', checkNotLoggedIn, (req, res) => {
-res.render('pages/login');
+  renderEJSPage(req, res, 'pages/login');
 })
 // when the login form is submitted, passport handles the login
 app.post('/login', checkNotLoggedIn, passport.authenticate('local', {
@@ -90,7 +105,7 @@ app.get('/register', checkNotLoggedIn, (req, res) => {
  })
  // return the registration page
 app.get('/register/confirm-email', checkNotLoggedIn, (req, res) => {
-  res.render('pages/confirm-email');
+  renderEJSPage(req, res, 'pages/confirm-email');
  })
 // when the registration form is submitted
 app.post('/register', checkNotLoggedIn, async (req, res, next) => {
@@ -115,24 +130,58 @@ app.get('/logout', (req, res) => {
   res.redirect('/login'); // redirect to the login page
 })
 app.get('/forgot', (req, res) => {
-  res.render('pages/forgot-password');
+  renderEJSPage(req, res, 'pages/forgot-password');
 })
 
 /**
  * Returns the main application page
  */
 app.get('/', checkLoggedIn, function(req, res) {
-  const isloggedIn = req.isAuthenticated();
-  console.log(isloggedIn);
-  res.render('pages/main-application');
+  renderEJSPage(req, res, 'pages/main-application');
 });
 
 /**
   * Returns the account page
   */
-app.get('/account', checkLoggedIn, (req, res) => {
-res.render('pages/account');
+app.get('/account', checkLoggedIn, async (req, res) => {
+  const user_id = req.session.passport.user;
+  let accountDetails = await getUserDetails(user_id);
+  console.log(user_id, accountDetails)
+  renderEJSPage(req, res, 'pages/account', {
+    email: accountDetails.email,
+    firstName: accountDetails.firstName,
+    lastName: accountDetails.lastName
+  })
+});
 
+/**
+  * Returns the account page
+  */
+ app.post('/account', checkLoggedIn, async (req, res) => {
+  const user_id = req.session.passport.user;
+  // TODO: verify and update account information in database
+});
+
+/**
+ * Gets the account details from the database
+ * @param {*} id 
+ * @returns {object} - Account details in an object, or returns error.
+ */
+async function getUserDetails(id) {
+  const { rows } = await db.pool.query('SELECT user_email, user_first_name, user_last_name FROM user_account WHERE user_id = $1', [id]);
+  var accountDetails = null;
+  if (rows.length === 1) { // check one user returned
+    user = rows[0];
+    accountDetails = {
+      email: user.user_email,
+      firstName: user.user_first_name,
+      lastName: user.user_last_name,
+    };
+    return accountDetails;
+  } else {
+    return {error: "Could not load account details"};
+  }
+}
 
 
 /****
@@ -145,16 +194,21 @@ app.use('/api/user', UserController);
 const ChatController = require('./api/chats/ChatController');
 app.use('/api/chats', ChatController);
 
-/****
+/**
  * Serve static content
  */
 app.use('/static', express.static('public'));
+
+/**
+ * Serve the documentation. (remove in final release)
+ */
+app.use('/docs', express.static('docs'));
 
 /****
  * Anything that isn't routed, show 404 page.
  */
 app.get('*', function(req, res) {
-    res.render('pages/404');
+    renderEJSPage(req, res, 'pages/404');
 });
 
 /****
@@ -175,42 +229,39 @@ function checkNotLoggedIn(req, res, next) {
   next();
 };
 
-/****
- * Start the server
+/**
+ * Start the server: tells express to listen on a port.
  */
 app.listen(8080, (err) => {
     if (err) console.log('Could not start server', err);
     console.log('Server listening on port 8080');
 });
 
-/****
-  * Get user data to popuate table
-  */
-function getUserDetails(id){
-  app.get('/accountInfo', function(req,res){
-    const { rows } = db.pool.query('SELECT user_email, user_fName, user_Lname, user_password FROM user_account WHERE user_id = $1', [id]);
-    var accountDetails = null;
-    if (rows.length === 1) { // check one user returned
-      user = rows[0];
-      accountDetails = {
-        email: user.user_email,
-        firstName: user.user_fName,
-        lastName: user.user_Lname,
-        password: user.user_password
-      };
-    }
-    return accountDetails;
-  })
+/**
+ * Wraps the EJS render function but adds the isLoggedIn param as needed by the header.
+ * @param {callback} res - Express middleware
+ * @param {string} location - The EJS page to load
+ * @param {object} data - Optional data to pass to EJS middleware
+ */
+function renderEJSPage(req, res, location, data) {
+  const isLoggedIn = req.isAuthenticated();
+  if (data) {
+    data.isLoggedIn = isLoggedIn;
+  } else {
+    data = {isLoggedIn: isLoggedIn}
+  }
+  console.log(data);
+  res.render(location, data);
 }
 
-/****
-  * Sending verification emails
-  */
-
+/**
+ * Emails a verificaiton code to user_email. Pushes the code to the database so it can be compared to later.
+ * @param {string} user_email - The email to send the verification email to.
+ */
 function sendVerificationEmail (user_email){
-    var nodemailer = require('nodemailer');
 
-    var transporter = nodemailer.createTransport({
+    // TODO: send email without auth (just tell them to check spam!)
+    const transporter = nodemailer.createTransport({
     	service: 'gmail',
     	auth: {
         userEmail: 'ouremail@gmail.com',
@@ -218,11 +269,14 @@ function sendVerificationEmail (user_email){
       }
     });
 
-    var options = {
+
+    var code = Math.floor(1000+Math.random()*9000);
+
+    const options = {
     	sender: 'ouremail@gmail.com',
       receiver: user_email,
       subject: 'Verification Email for Lecture Link',
-      content: '4 digit code here'
+      content: 'Here is your verification code: ' + code
     };
 
     transporter.sendMail(options, function(error, info){
@@ -230,7 +284,18 @@ function sendVerificationEmail (user_email){
     	   console.log(error)
     	}
     	else {
-    		console.log('Email sent' + info);
+        console.log('Email sent' + info);
+
+
+        db.pool.query("INSERT INTO ver_code VALUES($1, $2)"[user_email, code]);
+
     		}
+
     });
   }
+
+
+// Trying to get testing to work
+app.get('/', (req, res) => {
+  res.send('hopefully this works');
+});

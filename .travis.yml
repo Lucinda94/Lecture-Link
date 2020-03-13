@@ -9,6 +9,9 @@ node_js:
 #  except: [".."]
 #  only: ["master"]
 
+cache:
+  directories:
+    - "node_modules"
 
 # jobs:
 #   include: 

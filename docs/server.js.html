@@ -46,7 +46,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-_api_user_UserController.html">/api/user/UserController</a></li><li><a href="module-_frontend_main.html">/frontend/main</a></li><li><a href="module-ChatManager.html">ChatManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#db">db</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-_api_user_UserController.html">/api/user/UserController</a></li><li><a href="module-_frontend_main.html">/frontend/main</a></li><li><a href="module-ChatManager.html">ChatManager</a></li><li><a href="module-Server.html">Server</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkAccess">checkAccess</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -64,12 +64,17 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const express = require('express');
+            <pre class="prettyprint source linenums"><code>/**
+ * @module Server
+ */
+
+const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
+const nodemailer = require('nodemailer');
 
 /**
  * Import the database
@@ -81,10 +86,10 @@ const db = require('./postgres-db.js');
  */
 const initPassport = require('./passport-config');
 /**
- * Connect passport to the database 
+ * Connect passport to the database
  */
 initPassport(
-  passport, 
+  passport,
   async email => {
     // where given 'email' get 'id' and 'password' from the database.
     const { rows } = await db.pool.query('SELECT user_id, user_password FROM user_account WHERE user_email = $1', [email]);
@@ -122,7 +127,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(flash());
 app.use(session({
-  secret: "92yr82gfjkbeKLJFB9PGHR3UG283y49823yruhRJKfeHERJKfweHfef3IR23HRUAKefefHfwJR38YR923fw8EFEWFHRJwfKAMXFNfwefBXFZMy4328", // keyboard cat -
+  secret: "92yr82gfjkbeKLJFB9PGHR3UG283y49823yruhRJKfeHERJKfweHfef3IR23HRUAKefefHfwJR38YR923fw8EFEWFHRJwfKAMXFNfwefBXFZMy4328", // keyboard cat
   resave: false,
   saveUninitialized: false
 }))
@@ -133,16 +138,16 @@ var bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
 
 /****
- * 
+ *
  * Login/Register/Logout Routes
- * 
+ *
  */
 // Returns login page, only if they are not logged in
 app.get('/login', checkNotLoggedIn, (req, res) => {
-res.render('pages/login');
+  renderEJSPage(req, res, 'pages/login');
 })
 // when the login form is submitted, passport handles the login
 app.post('/login', checkNotLoggedIn, passport.authenticate('local', {
@@ -156,7 +161,7 @@ app.get('/register', checkNotLoggedIn, (req, res) => {
  })
  // return the registration page
 app.get('/register/confirm-email', checkNotLoggedIn, (req, res) => {
-  res.render('pages/confirm-email');
+  renderEJSPage(req, res, 'pages/confirm-email');
  })
 // when the registration form is submitted
 app.post('/register', checkNotLoggedIn, async (req, res, next) => {
@@ -181,15 +186,27 @@ app.get('/logout', (req, res) => {
   res.redirect('/login'); // redirect to the login page
 })
 app.get('/forgot', (req, res) => {
-  res.render('pages/forgot-password');
+  renderEJSPage(req, res, 'pages/forgot-password');
 })
 
 /**
  * Returns the main application page
  */
 app.get('/', checkLoggedIn, function(req, res) {
-  res.render('pages/main-application');
+  renderEJSPage(req, res, 'pages/main-application');
 });
+
+/**
+  * Returns the account page
+  */
+app.get('/account', checkLoggedIn, (req, res) => {
+  renderEJSPage(req, res, 'pages/account', {
+    email: "email here",
+    firstName: "first name here",
+    lastName: "last name here"
+  })
+});
+
 
 /****
  * API
@@ -201,16 +218,21 @@ app.use('/api/user', UserController);
 const ChatController = require('./api/chats/ChatController');
 app.use('/api/chats', ChatController);
 
-/****
+/**
  * Serve static content
  */
 app.use('/static', express.static('public'));
+
+/**
+ * Serve the documentation.
+ */
+app.use('/docs', express.static('docs'));
 
 /****
  * Anything that isn't routed, show 404 page.
  */
 app.get('*', function(req, res) {
-    res.render('pages/404');
+    renderEJSPage(req, res, 'pages/404');
 });
 
 /****
@@ -231,13 +253,90 @@ function checkNotLoggedIn(req, res, next) {
   next();
 };
 
-/****
- * Start the server
+/**
+ * Tells Express to listen on a port
+ * @function
+ * @param {integer} port - The port the listen on.
+ * @param {callback} callback
  */
 app.listen(8080, (err) => {
     if (err) console.log('Could not start server', err);
     console.log('Server listening on port 8080');
 });
+
+/**
+ * Wraps the EJS render function but adds the isLoggedIn param as needed by the header.
+ * @param {callback} res - Express middleware
+ * @param {string} location - The EJS page to load
+ * @param {object} data - Optional data to pass to EJS middleware
+ */
+function renderEJSPage(req, res, location, data) {
+  const isLoggedIn = req.isAuthenticated();
+  if (data) {
+    data.isLoggedIn = isLoggedIn;
+  } else {
+    data = {isLoggedIn: isLoggedIn}
+  }
+  console.log(data);
+  res.render(location, data);
+}
+
+/**
+ * Remove this?
+ * @deprecated
+ */
+function getUserDetails(id){
+  app.get('/accountInfo', function(req,res){
+    const { rows } = db.pool.query('SELECT user_email, user_fName, user_Lname, user_password FROM user_account WHERE user_id = $1', [id]);
+    var accountDetails = null;
+    if (rows.length === 1) { // check one user returned
+      user = rows[0];
+      accountDetails = {
+        email: user.user_email,
+        firstName: user.user_fName,
+        lastName: user.user_Lname,
+        password: user.user_password
+      };
+    }
+    return accountDetails;
+  })
+}
+
+/**
+ * Emails a verificaiton code to user_email. Pushes the code to the database so it can be compared to later.
+ * @param {string} user_email - The email to send the verification email to.
+ */
+function sendVerificationEmail (user_email){
+
+    // TODO: send email without auth (just tell them to check spam!)
+    const transporter = nodemailer.createTransport({
+    	service: 'gmail',
+    	auth: {
+        userEmail: 'ouremail@gmail.com',
+        password: 'ourpassword'
+      }
+    });
+
+    // TODO: use a random generator to get a 4 digit code
+    const options = {
+    	sender: 'ouremail@gmail.com',
+      receiver: user_email,
+      subject: 'Verification Email for Lecture Link',
+      content: '4 digit code here'
+    };
+
+    transporter.sendMail(options, function(error, info){
+    	if (error) {
+    	   console.log(error)
+    	}
+    	else {
+        console.log('Email sent' + info);
+        
+        // TODO: put the code in the database somewhere
+
+    		}
+    });
+  }
 </code></pre>
         </article>
     </section>
@@ -253,7 +352,7 @@ app.listen(8080, (err) => {
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Mar 06 2020 00:21:53 GMT+0000 (Greenwich Mean Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Mar 10 2020 21:31:32 GMT+0000 (Greenwich Mean Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

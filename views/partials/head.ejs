@@ -6,14 +6,18 @@
     <link rel="stylesheet" href="/static/css/master.css">
     <script src="https://kit.fontawesome.com/6388507e5f.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Socket.io -->
+    <script src=”https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js”></script>
   </head>
   <body>
     <header id=main-header>
       <h1 id=main-title>Lecture<span class="title-link">Link</span></h1>
+      <% if(isLoggedIn) { %>
       <div id="log-out">
         <a href="/logout">Logout</a>
       </div>
       <div id=account-settings>
-        <p><span>Account</span><i class="far fa-user-circle fa-2x"></i></p>
+        <a href="/account"><p><span>Account</span><i class="far fa-user-circle fa-2x"></i></p></a>
       </div>
+      <% } %>
     </header>
