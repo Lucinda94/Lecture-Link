@@ -283,3 +283,9 @@ function sendVerificationEmail (user_email){
 
     });
   }
+
+
+// Trying to get testing to work
+app.get('/', (req, res) => {
+  res.send('hopefully this works');
+});

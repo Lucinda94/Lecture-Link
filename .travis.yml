@@ -9,6 +9,9 @@ branches:
   except: [".."]
   only: ["master"]
 
+cache:
+  directories:
+    - "node_modules"
 
 # jobs:
 #   include: 
