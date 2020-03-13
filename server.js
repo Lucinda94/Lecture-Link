@@ -159,12 +159,26 @@ app.get('/account', checkLoggedIn, async (req, res) => {
   */
  app.post('/account', checkLoggedIn, async (req, res) => {
   const user_id = req.session.passport.user;
-  // TODO: verify and update account information in database
+  var fName = req.body.fName;
+  var lName = req.body.lName;
+  var pass = req.body.password;
+
+  if (fName){
+    db.pool.query("UPDATE user_account SET user_fName = $1 WHERE user_id = $2"[fName, user_id]);
+  }
+
+  if (lName){
+        db.pool.query("UPDATE user_account SET user_lName = $1 WHERE user_id = $2"[lName, user_id]);
+  }
+
+  if (pass){
+    db.pool.query("UPDATE user_account SET user_password = $1 WHERE user_id = $2"[pass, user_id]);
+  }
 });
 
 /**
  * Gets the account details from the database
- * @param {*} id 
+ * @param {*} id
  * @returns {object} - Account details in an object, or returns error.
  */
 async function getUserDetails(id) {

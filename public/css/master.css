@@ -41,6 +41,11 @@ body {
   top: -5px; /* aligning with icon */
   padding-right: 15px;
 }
+#account-settings a {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+}
 #log-out {
   position: absolute;
   top: 0;
