@@ -1,7 +1,7 @@
 
 /**
  *
- * @module /frontend/main
+ * @module frontend/main
  */
 
 //

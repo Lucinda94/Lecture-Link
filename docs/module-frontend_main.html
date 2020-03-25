@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: Server</title>
+    <title>JSDoc: frontend/main</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -52,7 +52,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Module</p>
-                        <h1>Server</h1>
+                        <h1>frontend/main</h1>
                     </header>
                     
                     
@@ -90,88 +90,6 @@
     
 
     
-        <div class='vertical-section'>
-            <h3 class="title"><span>Members</span></h3>
-            <div class="members">
-            
-                <div class="member">
-
-<h4 class="name" id="~db">
-    <a class="href-link" href="#~db">#</a>
-    
-        
-            <span class='tag'>inner</span>
-        
-            <span class='tag'>constant</span>
-        
-    
-    <span class="code-name">
-        db
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Import the database</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="server.js.html" class="button">View Source</a>
-            <span>
-                <a href="server.js.html">server.js</a>, <a href="server.js.html#line19">line 19</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-            </div>
-        </div>
-    
 
     
         <div class='vertical-section'>
@@ -182,18 +100,16 @@
 
 
     
-    <h4 class="name" id="~getUserDetails">
-        <a class="href-link" href="#~getUserDetails">#</a>
+    <h4 class="name" id="~addUser">
+        <a class="href-link" href="#~addUser">#</a>
         
-            
-                <span class='tag'>async</span>
             
                 <span class='tag'>inner</span>
             
         
         <span class="code-name">
             
-                getUserDetails<span class="signature">(id)</span><span class="type-signature"> &rarr; {object}</span>
+                addUser<span class="signature">(id)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -202,7 +118,7 @@
     
     
     <div class="description">
-        <p>Gets the account details from the database</p>
+        <p>Submits an api request to add (save) a user</p>
     </div>
     
 
@@ -246,7 +162,7 @@
   <td class="type">
   
       
-<span class="param-type">*</span>
+<span class="param-type">integer</span>
 
 
   
@@ -256,7 +172,7 @@
 
   
 
-  <td class="description last"></td>
+  <td class="description last"><p>The id to be added</p></td>
 </tr>
 
 
@@ -301,9 +217,9 @@
 
     
         <p class="tag-source">
-            <a href="server.js.html" class="button">View Source</a>
+            <a href="public_js_main.js.html" class="button">View Source</a>
             <span>
-                <a href="server.js.html">server.js</a>, <a href="server.js.html#line203">line 203</a>
+                <a href="public_js_main.js.html">public/js/main.js</a>, <a href="public_js_main.js.html#line158">line 158</a>
             </span>
         </p>
     
@@ -326,33 +242,6 @@
 
 
 
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><ul>
-<li>Account details in an object, or returns error.</li>
-</ul></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">object</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
 
 
 
@@ -362,8 +251,8 @@
 
 
     
-    <h4 class="name" id="~renderEJSPage">
-        <a class="href-link" href="#~renderEJSPage">#</a>
+    <h4 class="name" id="~col2Load">
+        <a class="href-link" href="#~col2Load">#</a>
         
             
                 <span class='tag'>inner</span>
@@ -371,7 +260,7 @@
         
         <span class="code-name">
             
-                renderEJSPage<span class="signature">(res, location, data)</span><span class="type-signature"></span>
+                col2Load<span class="signature">(dir, callback)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -380,7 +269,7 @@
     
     
     <div class="description">
-        <p>Wraps the EJS render function but adds the isLoggedIn param as needed by the header.</p>
+        <p>Loads a html file into column two (#main-col2) from the 'static/html/col2' directory.</p>
     </div>
     
 
@@ -418,7 +307,32 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>res</code></td>
+      <td class="name"><code>dir</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The html file to be loaded.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>callback</code></td>
   
 
   <td class="type">
@@ -434,57 +348,7 @@
 
   
 
-  <td class="description last"><p>Express middleware</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>location</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The EJS page to load</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>data</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">object</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Optional data to pass to EJS middleware</p></td>
+  <td class="description last"><p>Callback when the html has finished loading.</p></td>
 </tr>
 
 
@@ -529,9 +393,9 @@
 
     
         <p class="tag-source">
-            <a href="server.js.html" class="button">View Source</a>
+            <a href="public_js_main.js.html" class="button">View Source</a>
             <span>
-                <a href="server.js.html">server.js</a>, <a href="server.js.html#line279">line 279</a>
+                <a href="public_js_main.js.html">public/js/main.js</a>, <a href="public_js_main.js.html#line18">line 18</a>
             </span>
         </p>
     
@@ -563,8 +427,8 @@
 
 
     
-    <h4 class="name" id="~sendVerificationEmail">
-        <a class="href-link" href="#~sendVerificationEmail">#</a>
+    <h4 class="name" id="~col2LoadConversations">
+        <a class="href-link" href="#~col2LoadConversations">#</a>
         
             
                 <span class='tag'>inner</span>
@@ -572,7 +436,7 @@
         
         <span class="code-name">
             
-                sendVerificationEmail<span class="signature">(user_email)</span><span class="type-signature"></span>
+                col2LoadConversations<span class="signature">()</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -581,7 +445,209 @@
     
     
     <div class="description">
-        <p>Emails a verificaiton code to user_email. Pushes the code to the database so it can be compared to later.</p>
+        <p>Loads conversations into column two</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="public_js_main.js.html" class="button">View Source</a>
+            <span>
+                <a href="public_js_main.js.html">public/js/main.js</a>, <a href="public_js_main.js.html#line26">line 26</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~col2LoadDiscover">
+        <a class="href-link" href="#~col2LoadDiscover">#</a>
+        
+            
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                col2LoadDiscover<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Loads the discover column into column 2</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="public_js_main.js.html" class="button">View Source</a>
+            <span>
+                <a href="public_js_main.js.html">public/js/main.js</a>, <a href="public_js_main.js.html#line39">line 39</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~error">
+        <a class="href-link" href="#~error">#</a>
+        
+            
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                error<span class="signature">(message, error)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Displays an error message to the user | logs error information</p>
     </div>
     
 
@@ -619,7 +685,7 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>user_email</code></td>
+      <td class="name"><code>message</code></td>
   
 
   <td class="type">
@@ -635,7 +701,36 @@
 
   
 
-  <td class="description last"><p>The email to send the verification email to.</p></td>
+  <td class="description last"><ul>
+<li>The error message to display</li>
+</ul></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>error</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">error</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><ul>
+<li>Optional: Pass error to be logged if catching errors.</li>
+</ul></td>
 </tr>
 
 
@@ -680,9 +775,9 @@
 
     
         <p class="tag-source">
-            <a href="server.js.html" class="button">View Source</a>
+            <a href="public_js_main.js.html" class="button">View Source</a>
             <span>
-                <a href="server.js.html">server.js</a>, <a href="server.js.html#line294">line 294</a>
+                <a href="public_js_main.js.html">public/js/main.js</a>, <a href="public_js_main.js.html#line183">line 183</a>
             </span>
         </p>
     

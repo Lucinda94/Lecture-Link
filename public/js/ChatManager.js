@@ -1,7 +1,7 @@
 /**
  * Client-side controller, manages displaying chat related content in the DOM and communicates with the API.
  * 
- * @module ChatManager
+ * @module frontend/ChatManager
  */
 
 var _open_conversation = null;

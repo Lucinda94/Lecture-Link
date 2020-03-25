@@ -1,6 +1,6 @@
 /**
  * UserController Module
- * @module /api/user/UserController
+ * @module api/UserController
  */
 
 
