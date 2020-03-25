@@ -4,8 +4,6 @@
  * @module ChatManager
  */
 
-import { getSavedUsers } from "../../postgres-db";
-
 var _open_conversation = null;
 let _updateMessagesInterval = null;
 

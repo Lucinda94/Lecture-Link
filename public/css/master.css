@@ -82,6 +82,15 @@ body {
   flex-direction: column;
   flex-flow: column wrap;
   flex-grow: 1; /* Use all remaining space left after sidebar */
+  background-image: url('https://picsum.photos/500?blur=3');
+  background-size: cover;
+  background-position: center;
+}
+#main-col3 #chat-placeholder {
+  font-size: 2vw;
+  color: #fff;
+  text-align: center;
+  margin-top: 40vh;
 }
 
 
