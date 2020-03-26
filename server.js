@@ -8,10 +8,6 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
-const nodemailer = require('nodemailer');
-// sockets
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
 
 /**
  * Import the database
@@ -78,13 +74,6 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 
 /****
- * Sockets
- */
-io.on('connection', () =>{
-  console.log('a user is connected')
- })
-
-/****
  *
  * Login/Register/Logout Routes
  *
@@ -112,7 +101,7 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
   try {
     // hash the password the user has sent. Use await as this is async
     const passHash = await bcrypt.hash(req.body.password, 10);
-    const user = await db.addUser(req.body.fname, req.body.lname, req.body.email, passHash, "Busy");
+    const { rows } = await db.pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [req.body.fname, req.body.lname, req.body.email, passHash, "Busy"]);
     // TODO: send confirmation email
 
     // registration worked so send to login page
@@ -121,7 +110,7 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
   } catch (err) {
     console.log(err);
     // something went wrong, try again.
-    res.redirect('/register');
+    res.redirect('/login?registration_failed=true');
   }
 })
 // handles logging out
@@ -155,7 +144,7 @@ app.get('/account', checkLoggedIn, async (req, res) => {
 });
 
 /**
-  * Returns the account page
+  * Updates the account information
   */
  app.post('/account', checkLoggedIn, async (req, res) => {
   const user_id = req.session.passport.user;
@@ -244,8 +233,14 @@ app.get('*', function(req, res) {
     renderEJSPage(req, res, 'pages/404');
 });
 
-/****
- * Login checks (for use when limiting routes)
+/**
+ * Takes an express route request, checks if the user is logged in.
+ * If user is logged in, proceed with the request.
+ * If not, terminate the request the redirect to the login page.
+ * @param {callback} req - Express Middleware
+ * @param {callback} res - Express Middleware
+ * @param {callback} next - Express middleware
+ * @returns {callback} - Express callback function
  */
 // checks if user is logged in, if not redirects to login page
 function checkLoggedIn(req, res, next) {
@@ -263,7 +258,9 @@ function checkNotLoggedIn(req, res, next) {
 };
 
 /**
- * Start the server: tells express to listen on a port.
+ * Start the server
+ * @function
+ * @module express
  */
 app.listen(8080, (err) => {
     if (err) console.log('Could not start server', err);
@@ -291,6 +288,7 @@ function renderEJSPage(req, res, location, data) {
  * Emails a verificaiton code to user_email. Pushes the code to the database so it can be compared to later.
  * @param {string} user_email - The email to send the verification email to.
  */
+/* WIP
 function sendVerificationEmail (user_email){
 
     // TODO: send email without auth (just tell them to check spam!)
@@ -326,9 +324,4 @@ function sendVerificationEmail (user_email){
 
     });
   }
-
-
-// Trying to get testing to work
-app.get('/', (req, res) => {
-  res.send('hopefully this works');
-});
+*/

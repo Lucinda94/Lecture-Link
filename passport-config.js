@@ -1,12 +1,16 @@
 /****
  * Configuration of Passport.js as per the documentation.
- * 
- * Don't change this.
- * 
+ * @module passport-config
  */
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 
+/**
+ * 
+ * @param {callback} passport - Passport middleware
+ * @param {string} getUserByEmail - The email address of the user trying to login.
+ * @param {integer} getUserById - The id of the user trying to login.
+ */
 function initialize(passport, getUserByEmail, getUserById) {
   const authenticateUser = async (email, password, done) => {
     const user = await getUserByEmail(email)

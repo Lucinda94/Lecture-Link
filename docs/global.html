@@ -44,7 +44,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-_api_user_UserController.html">/api/user/UserController</a></li><li><a href="module-_frontend_main.html">/frontend/main</a></li><li><a href="module-ChatManager.html">ChatManager</a></li><li><a href="module-Server.html">Server</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkAccess">checkAccess</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#router">router</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-api_ChatController.html">api/ChatController</a></li><li><a href="module-api_UserController.html">api/UserController</a></li><li><a href="module-express.html">express</a></li><li><a href="module-frontend_ChatManager.html">frontend/ChatManager</a></li><li><a href="module-frontend_main.html">frontend/main</a></li><li><a href="module-pg.html">pg</a></li><li><a href="module-postgres-db.html">postgres-db</a></li><li><a href="module-Server.html">Server</a></li></ul><h3>Global</h3><ul><li><a href="global.html#initialize">initialize</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -129,232 +129,6 @@
     
 
     
-        <div class='vertical-section'>
-            <h3 class="title"><span>Members</span></h3>
-            <div class="members">
-            
-                <div class="member">
-
-<h4 class="name" id="db">
-    <a class="href-link" href="#db">#</a>
-    
-        
-            <span class='tag'>constant</span>
-        
-    
-    <span class="code-name">
-        db
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Import the database</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="api_chats_ChatController.js.html" class="button">View Source</a>
-            <span>
-                <a href="api_chats_ChatController.js.html">api/chats/ChatController.js</a>, <a href="api_chats_ChatController.js.html#line16">line 16</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="express">
-    <a class="href-link" href="#express">#</a>
-    
-        
-            <span class='tag'>constant</span>
-        
-    
-    <span class="code-name">
-        express
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Express modual</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="api_chats_ChatController.js.html" class="button">View Source</a>
-            <span>
-                <a href="api_chats_ChatController.js.html">api/chats/ChatController.js</a>, <a href="api_chats_ChatController.js.html#line5">line 5</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="router">
-    <a class="href-link" href="#router">#</a>
-    
-        
-            <span class='tag'>constant</span>
-        
-    
-    <span class="code-name">
-        router
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Creating an express router to handle api requests</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="api_chats_ChatController.js.html" class="button">View Source</a>
-            <span>
-                <a href="api_chats_ChatController.js.html">api/chats/ChatController.js</a>, <a href="api_chats_ChatController.js.html#line10">line 10</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-            </div>
-        </div>
-    
 
     
         <div class='vertical-section'>
@@ -365,22 +139,18 @@
 
 
     
-    <h4 class="name" id="checkAccess">
-        <a class="href-link" href="#checkAccess">#</a>
+    <h4 class="name" id="initialize">
+        <a class="href-link" href="#initialize">#</a>
         
         <span class="code-name">
             
-                checkAccess<span class="signature">(req, res, next)</span><span class="type-signature"></span>
+                initialize<span class="signature">(passport, getUserByEmail, getUserById)</span><span class="type-signature"></span>
             
         </span>
     </h4>
     
 
     
-    
-    <div class="description">
-        <p>Used in an express route to check if a user is logged in.</p>
-    </div>
     
 
 
@@ -417,57 +187,7 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>req</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">object</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Express request object.</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>res</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">object</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Express responce object.</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>next</code></td>
+      <td class="name"><code>passport</code></td>
   
 
   <td class="type">
@@ -483,7 +203,57 @@
 
   
 
-  <td class="description last"><p>Express callback.</p></td>
+  <td class="description last"><p>Passport middleware</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>getUserByEmail</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The email address of the user trying to login.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>getUserById</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">integer</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The id of the user trying to login.</p></td>
 </tr>
 
 
@@ -528,9 +298,9 @@
 
     
         <p class="tag-source">
-            <a href="api_chats_ChatController.js.html" class="button">View Source</a>
+            <a href="passport-config.js.html" class="button">View Source</a>
             <span>
-                <a href="api_chats_ChatController.js.html">api/chats/ChatController.js</a>, <a href="api_chats_ChatController.js.html#line79">line 79</a>
+                <a href="passport-config.js.html">passport-config.js</a>, <a href="passport-config.js.html#line14">line 14</a>
             </span>
         </p>
     
@@ -580,7 +350,7 @@
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Mar 25 2020 19:24:18 GMT+0000 (Greenwich Mean Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Mar 26 2020 14:38:58 GMT+0000 (Greenwich Mean Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
