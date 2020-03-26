@@ -204,6 +204,7 @@ async function getUserDetails(id) {
     return {error: "Could not load account details"};
   }
 }
+exports.getUserDetails = getUserDetails
 
 
 /****
@@ -325,3 +326,5 @@ function sendVerificationEmail (user_email){
     });
   }
 */
+
+// Testing travis

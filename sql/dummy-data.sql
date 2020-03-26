@@ -28,7 +28,7 @@ INSERT INTO user_account (
 							user_status)
 					VALUES 
 					('44', 'Austin', 'Collins', 'up904254@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
-					('2', 'Zahid', 'Awan', 'up895058@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
+					('2', 'Zahid', 'Awan', '', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
 					('3', 'Alistair', 'Julnes', 'up897828@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
 					('4', 'Jack', 'Sines', 'up901354@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
 					('5', 'Lucinda', 'Cole', 'up883852@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),

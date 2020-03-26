@@ -18,6 +18,7 @@ test('adds 1 + 2 to equal 3', () => {
 // })
 
 const expect = require('chai').expect
+const request = require('request');
 const server = require('../server');
 
 describe('test', () => {
@@ -25,3 +26,18 @@ describe('test', () => {
     expect('hopefully this works').to.equal('hopefully this works');
   });
 });
+
+describe("Can get user details from DB", () => {
+  it("Should return user info", () => {
+    const testUserDetails = {
+      email: "up898707@myport.ac.uk",
+      firstName: "Lybin",
+      lastName: "Babu",
+    };
+    
+    expect(server.getUserDetails("6")).to.equal(testUserDetails);
+    console.log(JSON.stringify(server.getUserDetails("6") ) );
+  })
+})
+
+
