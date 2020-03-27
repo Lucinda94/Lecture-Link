@@ -3,7 +3,7 @@ node_js:
   - "node"
 
 services:
-  - mysql
+  - postgresql
 
 cache:
   directories:
