@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-  - "stable"
+  - "node"
 
 services:
   - mysql
-  
+
 cache:
   directories:
     - "node_modules"
