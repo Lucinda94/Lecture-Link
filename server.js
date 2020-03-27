@@ -107,6 +107,8 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
     // registration worked so send to login page
     res.redirect('/register/confirm-email');
 
+    res.json({success: True})
+
   } catch (err) {
     console.log(err);
     // something went wrong, try again.
