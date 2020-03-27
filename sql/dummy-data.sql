@@ -27,8 +27,8 @@ INSERT INTO user_account (
 							user_password,
 							user_status)
 					VALUES 
-					('1', 'Austin', 'Collins', 'up904254@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
-					('2', 'Zahid', 'Awan', 'up895058@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
+					('44', 'Austin', 'Collins', 'up904254@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
+					('2', 'Zahid', 'Awan', '', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
 					('3', 'Alistair', 'Julnes', 'up897828@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
 					('4', 'Jack', 'Sines', 'up901354@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
 					('5', 'Lucinda', 'Cole', 'up883852@myport.ac.uk', '$2b$10$8G5w9Csq7yYBEziSit8HNuDomO0fRdF4GPzAYgTPegcsWVpdrB0My', 'Online'),
@@ -57,32 +57,4 @@ VALUES
 ('17', 'Dustin', 'Mcgrath', 'dmcgrath@port.ac.uk', '0', 'Lecturer', 'Away'),
 ('18', 'Sid', 'Schaefer', 'sschaefer@port.ac.uk', '0', 'Lecturer', 'Online'),
 ('19', 'Khadeejah', 'Holden', 'kholden@port.ac.uk', '0', 'Lecturer', 'Busy');
--- Relationships
-INSERT INTO user_relationship (	user_id,
-								ref_user_id,
-								type_of_relationship)
-							VALUES
-							(1, 2, 'Saved'),
-							(1, 3, 'Saved'),
-							(1, 4, 'Saved'),
-							(1, 5, 'Saved'),
-							(1, 6, 'Saved'),
-							(1, 7, 'Saved'),
-							(1, 8, 'Blocked'),
-							(1, 12, 'Saved'),
-							(1, 13, 'Saved'),
-							(1, 17, 'Saved'),
-							(1, 19, 'Saved'),
-							(1, 9, 'Saved');
-
-INSERT INTO chat_message (
-							sender_id,
-							receiver_id,
-							message_seen,
-							message_content) VALUES 
-							(1, 2, true, '1: This is a test message.'),
-							(2, 1, true, '2: This is another test message.'),
-							(1, 2, true, '3: This is one more test message.'),
-							(2, 1, true, '4: This is the last test message.'),
-							(1, 2, false, '3: Hey, have your read this?');
 

@@ -46,7 +46,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-_api_user_UserController.html">/api/user/UserController</a></li><li><a href="module-_frontend_main.html">/frontend/main</a></li><li><a href="module-ChatManager.html">ChatManager</a></li><li><a href="module-Server.html">Server</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkAccess">checkAccess</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-api_ChatController.html">api/ChatController</a></li><li><a href="module-api_UserController.html">api/UserController</a></li><li><a href="module-express.html">express</a></li><li><a href="module-frontend_ChatManager.html">frontend/ChatManager</a></li><li><a href="module-frontend_main.html">frontend/main</a></li><li><a href="module-pg.html">pg</a></li><li><a href="module-postgres-db.html">postgres-db</a></li><li><a href="module-Server.html">Server</a></li></ul><h3>Global</h3><ul><li><a href="global.html#initialize">initialize</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -74,7 +74,6 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
-const nodemailer = require('nodemailer');
 
 /**
  * Import the database
@@ -168,7 +167,7 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
   try {
     // hash the password the user has sent. Use await as this is async
     const passHash = await bcrypt.hash(req.body.password, 10);
-    const user = await db.addUser(req.body.fname, req.body.lname, req.body.email, passHash, "Busy");
+    const { rows } = await db.pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [req.body.fname, req.body.lname, req.body.email, passHash, "Busy"]);
     // TODO: send confirmation email
 
     // registration worked so send to login page
@@ -177,7 +176,7 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
   } catch (err) {
     console.log(err);
     // something went wrong, try again.
-    res.redirect('/register');
+    res.redirect('/login?registration_failed=true');
   }
 })
 // handles logging out
@@ -199,13 +198,78 @@ app.get('/', checkLoggedIn, function(req, res) {
 /**
   * Returns the account page
   */
-app.get('/account', checkLoggedIn, (req, res) => {
+app.get('/account', checkLoggedIn, async (req, res) => {
+  const user_id = req.session.passport.user;
+  let accountDetails = await getUserDetails(user_id);
+  console.log(user_id, accountDetails)
   renderEJSPage(req, res, 'pages/account', {
-    email: "email here",
-    firstName: "first name here",
-    lastName: "last name here"
+    email: accountDetails.email,
+    firstName: accountDetails.firstName,
+    lastName: accountDetails.lastName
   })
 });
+
+/**
+  * Updates the account information
+  */
+ app.post('/account', checkLoggedIn, async (req, res) => {
+  const user_id = req.session.passport.user;
+  var fName = req.body.fName;
+  var lName = req.body.lName;
+  var pass = req.body.password;
+  var success = true;
+  if (fName){
+    try{
+          db.pool.query("UPDATE user_account SET user_fName = $1 WHERE user_id = $2"[fName, user_id]);
+    }catch{
+      success = false;
+
+
+
+    }
+  }
+
+  if (lName){
+    try{
+          db.pool.query("UPDATE user_account SET user_lName = $1 WHERE user_id = $2"[lName, user_id]);
+    }catch{
+      success = false;
+    }
+  }
+
+
+  if (pass){
+    try{
+          db.pool.query("UPDATE user_account SET user_password = $1 WHERE user_id = $2"[pass, user_id]);
+    }catch{
+      success = false;
+    }
+
+  }
+
+  res.redirect('/account?success='+success);
+});
+
+/**
+ * Gets the account details from the database
+ * @param {*} id
+ * @returns {object} - Account details in an object, or returns error.
+ */
+async function getUserDetails(id) {
+  const { rows } = await db.pool.query('SELECT user_email, user_first_name, user_last_name FROM user_account WHERE user_id = $1', [id]);
+  var accountDetails = null;
+  if (rows.length === 1) { // check one user returned
+    user = rows[0];
+    accountDetails = {
+      email: user.user_email,
+      firstName: user.user_first_name,
+      lastName: user.user_last_name,
+    };
+    return accountDetails;
+  } else {
+    return {error: "Could not load account details"};
+  }
+}
 
 
 /****
@@ -224,7 +288,7 @@ app.use('/api/chats', ChatController);
 app.use('/static', express.static('public'));
 
 /**
- * Serve the documentation.
+ * Serve the documentation. (remove in final release)
  */
 app.use('/docs', express.static('docs'));
 
@@ -235,8 +299,14 @@ app.get('*', function(req, res) {
     renderEJSPage(req, res, 'pages/404');
 });
 
-/****
- * Login checks (for use when limiting routes)
+/**
+ * Takes an express route request, checks if the user is logged in.
+ * If user is logged in, proceed with the request.
+ * If not, terminate the request the redirect to the login page.
+ * @param {callback} req - Express Middleware
+ * @param {callback} res - Express Middleware
+ * @param {callback} next - Express middleware
+ * @returns {callback} - Express callback function
  */
 // checks if user is logged in, if not redirects to login page
 function checkLoggedIn(req, res, next) {
@@ -254,10 +324,9 @@ function checkNotLoggedIn(req, res, next) {
 };
 
 /**
- * Tells Express to listen on a port
+ * Start the server
  * @function
- * @param {integer} port - The port the listen on.
- * @param {callback} callback
+ * @module express
  */
 app.listen(8080, (err) => {
     if (err) console.log('Could not start server', err);
@@ -282,30 +351,10 @@ function renderEJSPage(req, res, location, data) {
 }
 
 /**
- * Remove this?
- * @deprecated
- */
-function getUserDetails(id){
-  app.get('/accountInfo', function(req,res){
-    const { rows } = db.pool.query('SELECT user_email, user_fName, user_Lname, user_password FROM user_account WHERE user_id = $1', [id]);
-    var accountDetails = null;
-    if (rows.length === 1) { // check one user returned
-      user = rows[0];
-      accountDetails = {
-        email: user.user_email,
-        firstName: user.user_fName,
-        lastName: user.user_Lname,
-        password: user.user_password
-      };
-    }
-    return accountDetails;
-  })
-}
-
-/**
  * Emails a verificaiton code to user_email. Pushes the code to the database so it can be compared to later.
  * @param {string} user_email - The email to send the verification email to.
  */
+/* WIP
 function sendVerificationEmail (user_email){
 
     // TODO: send email without auth (just tell them to check spam!)
@@ -317,12 +366,14 @@ function sendVerificationEmail (user_email){
       }
     });
 
-    // TODO: use a random generator to get a 4 digit code
+
+    var code = Math.floor(1000+Math.random()*9000);
+
     const options = {
     	sender: 'ouremail@gmail.com',
       receiver: user_email,
       subject: 'Verification Email for Lecture Link',
-      content: '4 digit code here'
+      content: 'Here is your verification code: ' + code
     };
 
     transporter.sendMail(options, function(error, info){
@@ -331,12 +382,15 @@ function sendVerificationEmail (user_email){
     	}
     	else {
         console.log('Email sent' + info);
-        
-        // TODO: put the code in the database somewhere
+
+
+        db.pool.query("INSERT INTO ver_code VALUES($1, $2)"[user_email, code]);
 
     		}
+
     });
   }
+*/
 </code></pre>
         </article>
     </section>
@@ -352,7 +406,7 @@ function sendVerificationEmail (user_email){
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Mar 10 2020 21:31:32 GMT+0000 (Greenwich Mean Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Mar 26 2020 14:38:58 GMT+0000 (Greenwich Mean Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

@@ -1,7 +1,7 @@
 /**
  * Client-side controller, manages displaying chat related content in the DOM and communicates with the API.
  * 
- * @module ChatManager
+ * @module frontend/ChatManager
  */
 
 var _open_conversation = null;
@@ -10,11 +10,13 @@ let _updateMessagesInterval = null;
 /**
  * If a user card is clicked, get the id data attribute and load the chat column for that id.
  */
-$(document).on('click','.user', function(event) { 
+$(document).on('click','.user', function(event) {
     const target = $(event.target).parent();
     const id = target.data('id');
-    console.log("event: " + id);
-    loadChatColumn(id);
+    if (id) {
+        console.log("event: " + id);
+        loadChatColumn(id);
+    }
 });
 
 
@@ -186,6 +188,8 @@ function error(message, error) {
         console.log(error);
     }
 }
+
+
 
 
 

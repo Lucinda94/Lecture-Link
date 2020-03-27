@@ -1,8 +1,29 @@
+/**
+ * ChatController Module
+ * @module api/ChatController
+ */
+
+
+/**
+ * Express modual
+ * @const
+ */
 const express = require('express');
+/**
+ * Creating an express router to handle api requests
+ * @const
+ */
 const router = express.Router();
 
+/**
+ * Import the database
+ * @const
+ */
 const db = require('../../postgres-db');
 
+/**
+ * API Endpoint for getting messages with a specific user
+ */
 router.get('/get/:id', checkAccess, async (req, res) => {
     const user_id = req.session.passport.user;
     if (req.params.id == null || req.params.id == "undefined") {
@@ -20,7 +41,9 @@ router.get('/get/:id', checkAccess, async (req, res) => {
     res.status(200).json(rows);
 });
 
-// send a message to a user eg. POST /api/chats/RECEIVER_ID with the sender id and content in the request body
+/**
+ * API endpoint for sending a message to a specific user
+ */
 router.post('/send/:id', checkAccess, async (req, res) => {
     const user_id = req.session.passport.user.toString();
     console.log(user_id);

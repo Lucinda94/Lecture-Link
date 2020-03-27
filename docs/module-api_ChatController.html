@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: Server</title>
+    <title>JSDoc: api/ChatController</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -52,7 +52,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Module</p>
-                        <h1>Server</h1>
+                        <h1>api/ChatController</h1>
                     </header>
                     
                     
@@ -65,6 +65,8 @@
 <header>
     
         
+            
+        
     
 </header>
 
@@ -72,6 +74,86 @@
     <div class="container-overview">
     
         
+            <div class="description"><p>ChatController Module</p></div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="api_chats_ChatController.js.html" class="button">View Source</a>
+            <span>
+                <a href="api_chats_ChatController.js.html">api/chats/ChatController.js</a>, <a href="api_chats_ChatController.js.html#line1">line 1</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
     
@@ -155,9 +237,159 @@
 
     
         <p class="tag-source">
-            <a href="server.js.html" class="button">View Source</a>
+            <a href="api_chats_ChatController.js.html" class="button">View Source</a>
             <span>
-                <a href="server.js.html">server.js</a>, <a href="server.js.html#line15">line 15</a>
+                <a href="api_chats_ChatController.js.html">api/chats/ChatController.js</a>, <a href="api_chats_ChatController.js.html#line22">line 22</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="~express">
+    <a class="href-link" href="#~express">#</a>
+    
+        
+            <span class='tag'>inner</span>
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        express
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Express modual</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="api_chats_ChatController.js.html" class="button">View Source</a>
+            <span>
+                <a href="api_chats_ChatController.js.html">api/chats/ChatController.js</a>, <a href="api_chats_ChatController.js.html#line11">line 11</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="~router">
+    <a class="href-link" href="#~router">#</a>
+    
+        
+            <span class='tag'>inner</span>
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        router
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Creating an express router to handle api requests</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="api_chats_ChatController.js.html" class="button">View Source</a>
+            <span>
+                <a href="api_chats_ChatController.js.html">api/chats/ChatController.js</a>, <a href="api_chats_ChatController.js.html#line16">line 16</a>
             </span>
         </p>
     
@@ -182,8 +414,8 @@
 
 
     
-    <h4 class="name" id="~checkLoggedIn">
-        <a class="href-link" href="#~checkLoggedIn">#</a>
+    <h4 class="name" id="~checkAccess">
+        <a class="href-link" href="#~checkAccess">#</a>
         
             
                 <span class='tag'>inner</span>
@@ -191,7 +423,7 @@
         
         <span class="code-name">
             
-                checkLoggedIn<span class="signature">(req, res, next)</span><span class="type-signature"> &rarr; {callback}</span>
+                checkAccess<span class="signature">(req, res, next)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -200,9 +432,7 @@
     
     
     <div class="description">
-        <p>Takes an express route request, checks if the user is logged in.
-If user is logged in, proceed with the request.
-If not, terminate the request the redirect to the login page.</p>
+        <p>Used in an express route to check if a user is logged in.</p>
     </div>
     
 
@@ -246,7 +476,7 @@ If not, terminate the request the redirect to the login page.</p>
   <td class="type">
   
       
-<span class="param-type">callback</span>
+<span class="param-type">object</span>
 
 
   
@@ -256,7 +486,7 @@ If not, terminate the request the redirect to the login page.</p>
 
   
 
-  <td class="description last"><p>Express Middleware</p></td>
+  <td class="description last"><p>Express request object.</p></td>
 </tr>
 
 
@@ -271,7 +501,7 @@ If not, terminate the request the redirect to the login page.</p>
   <td class="type">
   
       
-<span class="param-type">callback</span>
+<span class="param-type">object</span>
 
 
   
@@ -281,7 +511,7 @@ If not, terminate the request the redirect to the login page.</p>
 
   
 
-  <td class="description last"><p>Express Middleware</p></td>
+  <td class="description last"><p>Express responce object.</p></td>
 </tr>
 
 
@@ -306,7 +536,7 @@ If not, terminate the request the redirect to the login page.</p>
 
   
 
-  <td class="description last"><p>Express middleware</p></td>
+  <td class="description last"><p>Express callback.</p></td>
 </tr>
 
 
@@ -351,9 +581,9 @@ If not, terminate the request the redirect to the login page.</p>
 
     
         <p class="tag-source">
-            <a href="server.js.html" class="button">View Source</a>
+            <a href="api_chats_ChatController.js.html" class="button">View Source</a>
             <span>
-                <a href="server.js.html">server.js</a>, <a href="server.js.html#line246">line 246</a>
+                <a href="api_chats_ChatController.js.html">api/chats/ChatController.js</a>, <a href="api_chats_ChatController.js.html#line85">line 85</a>
             </span>
         </p>
     
@@ -375,213 +605,6 @@ If not, terminate the request the redirect to the login page.</p>
 
 
 
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><ul>
-<li>Express callback function</li>
-</ul></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">callback</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="~getUserDetails">
-        <a class="href-link" href="#~getUserDetails">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-                <span class='tag'>inner</span>
-            
-        
-        <span class="code-name">
-            
-                getUserDetails<span class="signature">(id)</span><span class="type-signature"> &rarr; {object}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <p>Gets the account details from the database</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>id</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">*</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="server.js.html" class="button">View Source</a>
-            <span>
-                <a href="server.js.html">server.js</a>, <a href="server.js.html#line192">line 192</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><ul>
-<li>Account details in an object, or returns error.</li>
-</ul></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">object</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
 
 
 

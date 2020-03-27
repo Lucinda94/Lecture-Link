@@ -1,7 +1,7 @@
 
 /**
  *
- * @module /frontend/main
+ * @module frontend/main
  */
 
 //
@@ -45,7 +45,7 @@ function col2LoadDiscover() {
 $("#n2-button-discover").click(col2LoadDiscover);
 
 /**
- * Updates the search results in the discver column when 'Update Results' button is clicked.
+ * Updates the search results in the discover column when 'Update Results' button is clicked.
  */
 $(document).on('submit','#user-search', function(e){
     // stop form from submitting
@@ -135,3 +135,54 @@ function col2LoadRelationships(event) {
 $("#n2-button-saved-students").click({type_of_relationship: "Saved"}, col2LoadRelationships);
 $("#n2-button-saved-lecturers").click({type_of_relationship: "Lecturers"}, col2LoadRelationships);
 $("#n2-button-blocked").click({type_of_relationship: "Blocked"}, col2LoadRelationships);
+
+
+/**
+ * Runs when a the user clicks the add user button
+ */
+$(document).on('click','.add-user', function(event) {
+    const target = $(event.target).parent();
+    const userCard = target.closest(".user");
+    const id = userCard.data('id');
+    console.log(id);
+    if (id != undefined) {
+        console.log("add user: " + id);
+        addUser(id);
+    }
+});
+
+/**
+ * Submits an api request to add (save) a user
+ * @param {integer} id - The id to be added
+ */
+function addUser(id) {
+    $.ajax({ 
+        url   : '/api/user/relationships/add/' + id,
+        type  : "POST",
+        success: function(response){
+            console.log(response);
+           if (response.success === true) {
+               // success
+
+           } else {
+               // server error
+               
+           }
+        },
+        error: function (e) {
+            error("Unable to add user, try again.", e);
+        }
+    });
+}
+
+/**
+ * Displays an error message to the user | logs error information
+ * @param {string} message -- The error message to display
+ * @param {error} error -- Optional: Pass error to be logged if catching errors.
+ */
+function error(message, error) {
+    // TODO: display message somewhere
+    if (error) {
+        console.log(error);
+    }
+}
