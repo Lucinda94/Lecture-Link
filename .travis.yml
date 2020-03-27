@@ -1,21 +1,12 @@
 language: node_js
 node_js:
-  - "stable"
+  - "node"
 
-#cache: npm
-
-#branches:
-#  except: [".."]
-#  only: ["master"]
+services:
+  - mysql
 
 cache:
   directories:
     - "node_modules"
 
-# jobs:
-#   include: 
-#     - stage: test
-#       script: ./test 1
-#       script: ./test 2
-#     - stage: deploy
-#       script: ./deploy
+

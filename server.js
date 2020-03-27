@@ -98,18 +98,26 @@ app.get('/register/confirm-email', checkNotLoggedIn, (req, res) => {
  })
 // when the registration form is submitted
 app.post('/register', checkNotLoggedIn, async (req, res, next) => {
-  try {    
-    // hash the password the user has sent. Use await as this is async
+  try {
+    // Check if the user is already registered in the database
+    const emails = await db.pool.query('SELECT user_email FROM user_account WHERE user_email = $1', [req.body.email]);
+    if (emails.length >= 1) {
 
+      throw;
+    }
+    else {
 
-    const passHash = await bcrypt.hash(req.body.password, 10);
-    const { rows } = await db.pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [req.body.fname, req.body.lname, req.body.email, passHash, "Busy"]);
-    // TODO: send confirmation email
+      // hash the password the user has sent. Use await as this is async
+      const passHash = await bcrypt.hash(req.body.password, 10);
+      const { rows } = await db.pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [req.body.fname, req.body.lname, req.body.email, passHash, "Busy"]);
+      // TODO: send confirmation email
 
-    res.status(200);
+      res.status(200);
 
-    // registration worked so send to login page
-    res.redirect('/register/confirm-email');
+      // registration worked so send to login page
+      res.redirect('/register/confirm-email');
+    }
+
 
   } catch (err) {
     console.log(err);
