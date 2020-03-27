@@ -114,7 +114,7 @@ function col2LoadRelationships(event) {
                     const email = user.user_email;
                     const lecturerClass = (user.user_role === "Lecturer") ? " lecturer" : "";
                     const html = `<div class="user${lecturerClass}" data-id="${id}">
-                                    <p class="name">${name}</a><span class="add-user"><i class="fas fa-user-minus"></i></p>
+                                    <p class="name">${name}<span class="add-user"><i class="fas fa-user-minus"></i></span></p>
                                     <p>${email}</p>
                                 </div>`;
                     resultsContainer.append(html);
@@ -147,26 +147,32 @@ $(document).on('click','.add-user', function(event) {
     console.log(id);
     if (id != undefined) {
         console.log("add user: " + id);
-        addUser(id);
+        addUser(id, userCard);
     }
 });
 
 /**
  * Submits an api request to add (save) a user
  * @param {integer} id - The id to be added
+ * @param {object} userCard - Optional: the user card, used to update the add friend button
  */
-function addUser(id) {
+function addUser(id, userCard) {
     $.ajax({ 
         url   : '/api/user/relationships/add/' + id,
         type  : "POST",
         success: function(response){
-            console.log(response);
            if (response.success === true) {
                // success
-
+                if (userCard) {
+                    userCard.innerHTML = "testing";
+                    console.log("we made it")
+                    const addButton = userCard.children(".add-user");
+                    addButton.remove();
+                    //addButton.insertBefore('<span class="remove-user"><i class="fas fa-user-minus"></i></span>');
+                }
            } else {
                // server error
-               
+               console.log("we didn't")
            }
         },
         error: function (e) {
