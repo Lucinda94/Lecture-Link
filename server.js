@@ -103,7 +103,7 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
     const emails = await db.pool.query('SELECT user_email FROM user_account WHERE user_email = $1', [req.body.email]);
     if (emails.length >= 1) {
 
-      throw;
+      res.redirect("/login?error_message=email-exists");
     }
     else {
 
