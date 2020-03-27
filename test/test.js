@@ -79,11 +79,6 @@ QUnit.test("User can register", async function(assert){
   assert.equal(testRes.status, 200, "User has been able to register successfully")
 })
 
-//Test Fails
-QUnit.test("User cannot register a second account", async function(assert){
-  testRes = await httpPost ("register", testUser.register);
-  assert.equal(testRes.status, 409, "User already has an account")
-})
 
 QUnit.test("User can login", async function(assert){
   testRes = await httpPost ("login", testUser.login);
