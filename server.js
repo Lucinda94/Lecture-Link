@@ -104,7 +104,7 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
     const { rows } = await db.pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [req.body.fname, req.body.lname, req.body.email, passHash, "Busy"]);
     // TODO: send confirmation email
 
-    res.status(200).send("ok");
+    res.status(200);
 
     // registration worked so send to login page
     res.redirect('/register/confirm-email');
@@ -112,7 +112,7 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
   } catch (err) {
     console.log(err);
     // something went wrong, try again.
-    res.status(200).send("ok");
+    res.status(200);
     res.redirect('/login?registration_failed=true');
   }
 })
