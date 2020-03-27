@@ -22,6 +22,7 @@ In order to run the test script, run the following line:
 ```bash
 npm test
 ```
+
 ## References
 - The login system:
 -- https://github.com/WebDevSimplified/Nodejs-Passport-Login
