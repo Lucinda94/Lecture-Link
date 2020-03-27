@@ -114,7 +114,7 @@ function col2LoadRelationships(event) {
                     const email = user.user_email;
                     const lecturerClass = (user.user_role === "Lecturer") ? " lecturer" : "";
                     const html = `<div class="user${lecturerClass}" data-id="${id}">
-                                    <p class="name">${name}<span class="add-user"><i class="fas fa-user-minus"></i></span></p>
+                                    <p class="name">${name}<span class="remove-user"><i class="fas fa-user-minus"></i></span></p>
                                     <p>${email}</p>
                                 </div>`;
                     resultsContainer.append(html);
@@ -164,19 +164,60 @@ function addUser(id, userCard) {
            if (response.success === true) {
                // success
                 if (userCard) {
-                    console.log("we made it")
-                    alert("added user: " + id)
+                    // card given so update the button
                     const addButton = userCard.children(".name").children(".add-user");
                     addButton.before('<span class="remove-user"><i class="fas fa-user-minus"></i></span>');
                     addButton.remove();
                 }
            } else {
                // server error
-               console.log("we didn't")
            }
         },
         error: function (e) {
             error("Unable to add user, try again.", e);
+        }
+    });
+}
+
+/**
+ * Runs when a the user clicks the add user button
+ */
+$(document).on('click','.remove-user', function(event) {
+    const target = $(event.target).parent();
+    const userCard = target.closest(".user");
+    const id = userCard.data('id');
+    console.log(id);
+    if (id != undefined) {
+        console.log("remove user: " + id);
+        removeUser(id, userCard);
+    }
+});
+
+/**
+ * Submits an api request to add (save) a user
+ * @param {integer} id - The id to be added
+ * @param {object} userCard - Optional: the user card, used to update the add friend button
+ */
+function removeUser(id, userCard) {
+    $.ajax({ 
+        url   : '/api/user/relationships/remove/' + id,
+        type  : "POST",
+        success: function(response){
+           if (response.success === true) {
+               // success
+                if (userCard) {
+                    // card given so update the button
+                    const addButton = userCard.children(".name").children(".remove-user");
+                    addButton.before('<span class="add-user"><i class="fas fa-user-plus"></i></span>');
+                    addButton.remove();
+                }
+           } else {
+               // server error
+               error("Unable to remove user, try again.", "Server Error");
+           }
+        },
+        error: function (e) {
+            error("Unable to remove user, try again.", e);
         }
     });
 }
@@ -187,7 +228,7 @@ function addUser(id, userCard) {
  * @param {error} error -- Optional: Pass error to be logged if catching errors.
  */
 function error(message, error) {
-    // TODO: display message somewhere
+    alert(message);
     if (error) {
         console.log(error);
     }
