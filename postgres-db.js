@@ -15,7 +15,7 @@ const { Pool } = require('pg');
  * @const
  */
 const pool = new Pool({
-    database: 'lecturelink',
+    database: 'lecturelink2',
     statement_timeout: 5000,
     host: '/var/run/postgresql'
 });

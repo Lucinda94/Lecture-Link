@@ -5,7 +5,7 @@
     "main": "server.js",
     "scripts": {
         "setup": "npm install && npm run initpgsql",
-        "initpgsql": "createdb lecturelink; psql lecturelink < sql/init.sql",
+        "initpgsql": "createdb lecturelink2; psql lecturelink2 < sql/init.sql",
         "loadDummyData": "psql lecturelink < sql/dummy-data.sql",
         "start": "node server.js",
         "devStart": "nodemon server.js",
