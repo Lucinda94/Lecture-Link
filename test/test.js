@@ -56,7 +56,7 @@ async function httpPost(request, obj){
         'Content-Type': 'application/json'
     }
   });
-  return await res.status();
+  return await res;
 }
 
 // Testing the application
