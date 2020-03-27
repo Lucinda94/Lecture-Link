@@ -68,7 +68,7 @@ $(document).on('submit','#user-search', function(e){
                 const email = user.user_email;
                 const lecturerClass = (user.user_role === "Lecturer") ? " lecturer" : "";
                 const html = `<div class="user${lecturerClass}" data-id="${id}">
-                                 <p class="name">${name}</a><span class="add-user"><i class="fas fa-user-plus"></i></p>
+                                 <p class="name">${name}<span class="add-user"><i class="fas fa-user-plus"></i></span></p>
                                  <p>${email}</p>
                               </div>`;
                               console.log(html);
@@ -164,11 +164,11 @@ function addUser(id, userCard) {
            if (response.success === true) {
                // success
                 if (userCard) {
-                    userCard.innerHTML = "testing";
                     console.log("we made it")
-                    const addButton = userCard.children(".add-user");
+                    alert("added user: " + id)
+                    const addButton = userCard.children(".name").children(".add-user");
+                    addButton.before('<span class="remove-user"><i class="fas fa-user-minus"></i></span>');
                     addButton.remove();
-                    //addButton.insertBefore('<span class="remove-user"><i class="fas fa-user-minus"></i></span>');
                 }
            } else {
                // server error

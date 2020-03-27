@@ -492,7 +492,7 @@ body {
 .user.lecturer p.name {
   background-color: #f45a00;
 }
-.user .add-user {
+.user .add-user, .user .remove-user {
   margin-left: 5px;
 }
 .search-end {
