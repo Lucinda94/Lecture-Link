@@ -98,7 +98,7 @@ app.get('/register/confirm-email', checkNotLoggedIn, (req, res) => {
  })
 // when the registration form is submitted
 app.post('/register', checkNotLoggedIn, async (req, res, next) => {
-  try {
+  try {    
     // hash the password the user has sent. Use await as this is async
     const passHash = await bcrypt.hash(req.body.password, 10);
     const { rows } = await db.pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [req.body.fname, req.body.lname, req.body.email, passHash, "Busy"]);
