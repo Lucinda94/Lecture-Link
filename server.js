@@ -98,18 +98,26 @@ app.get('/register/confirm-email', checkNotLoggedIn, (req, res) => {
  })
 // when the registration form is submitted
 app.post('/register', checkNotLoggedIn, async (req, res, next) => {
-  try {    
-    // hash the password the user has sent. Use await as this is async
+  try {
+    // Check if the user is already registered in the database
+    const emails = await db.pool.query('SELECT user_email FROM user_account WHERE user_email = $1', [req.body.email]);
+    if (emails.length >= 1) {
 
+      throw  "Email is already in use";
+    }
+    else {
 
-    const passHash = await bcrypt.hash(req.body.password, 10);
-    const { rows } = await db.pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [req.body.fname, req.body.lname, req.body.email, passHash, "Busy"]);
-    // TODO: send confirmation email
+      // hash the password the user has sent. Use await as this is async
+      const passHash = await bcrypt.hash(req.body.password, 10);
+      const { rows } = await db.pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [req.body.fname, req.body.lname, req.body.email, passHash, "Busy"]);
+      // TODO: send confirmation email
 
-    res.status(200);
+      res.status(200);
 
-    // registration worked so send to login page
-    res.redirect('/register/confirm-email');
+      // registration worked so send to login page
+      res.redirect('/register/confirm-email');
+    }
+
 
   } catch (err) {
     console.log(err);
@@ -159,33 +167,29 @@ app.get('/account', checkLoggedIn, async (req, res) => {
   var lName = req.body.lName;
   var pass = req.body.password;
   var success = true;
+
   if (fName){
     try{
-          db.pool.query("UPDATE user_account SET user_fName = $1 WHERE user_id = $2"[fName, user_id]);
+          db.pool.query("UPDATE user_account SET user_fName = $1 WHERE user_id = $2",[fName, user_id]);
     }catch{
       success = false;
-
-
-
     }
   }
 
   if (lName){
     try{
-          db.pool.query("UPDATE user_account SET user_lName = $1 WHERE user_id = $2"[lName, user_id]);
+          db.pool.query("UPDATE user_account SET user_lName = $1 WHERE user_id = $2",[lName, user_id]);
     }catch{
       success = false;
     }
   }
 
-
   if (pass){
     try{
-          db.pool.query("UPDATE user_account SET user_password = $1 WHERE user_id = $2"[pass, user_id]);
+          db.pool.query("UPDATE user_account SET user_password = $1 WHERE user_id = $2",[pass, user_id]);
     }catch{
       success = false;
     }
-
   }
 
   res.redirect('/account?success='+success);
