@@ -105,15 +105,15 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
     // TODO: send confirmation email
 
     // registration worked so send to login page
-    res.redirect('/register/confirm-email');
+    res.redirect('/register/confirm-email', {state: req.session.state});
 
     res.json({success: true, reason: "Account was created"})
 
   } catch (err) {
     console.log(err);
     // something went wrong, try again.
+    res.redirect('/login?registration_failed=true', {state: req.session.state});
     res.json({success: true, reason: "Account was created"})
-    res.redirect('/login?registration_failed=true');
   }
 })
 // handles logging out
