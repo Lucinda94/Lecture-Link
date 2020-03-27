@@ -1,3 +1,5 @@
+/* This file contains units test to check everything works*/
+
 const request = require('request');
 const fetch = require('node-fetch');
 const server = require('../server');
