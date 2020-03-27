@@ -1,11 +1,27 @@
-# Lecture Link [![Build Status](https://travis-ci.com/Lucinda94/Lecture-Link.svg?branch=master)](https://travis-ci.com/Lucinda94/Lecture-Link)
+# Lecture Link
 Lecturer messaging app
 
 ## Introduction
 Lecture Link is a web application for the use of Students and Lecturers to communicate during lectures as well as outside of University. 
 
+
 ## How to install
-You will need to gitclone the repository
+The website uses a number of library modules that must be installed. This can be done with one line:
+```bash
+npm install
+```
+
+## How to run the webserver
+Now to run the webserver, this can be done by running the following line:
+```bash
+npm start
+```
+
+## How to run the test script
+In order to run the test script, run the following line:
+```bash
+npm test
+```
 
 ## References
 - The login system:
