@@ -66,7 +66,7 @@ router.get('/get/:id', checkAccess, async (req, res) => {
 });
 
 /**
- * API endpoint add a relationship.
+ * API endpoint to add a relationship.
  * @name api/relationships/add/:id
  * @function
  */
@@ -76,6 +76,25 @@ router.get('/get/:id', checkAccess, async (req, res) => {
     const second_user_id = req.params.id;
     try {
         const { rows } = await db.pool.query(`INSERT into user_relationship (user_id, ref_user_id, type_of_relationship) VALUES (${user_id}, ${second_user_id}, 'Saved')`);
+        return res.status(200).json({success: true});
+        
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({success: false});
+    }
+});
+
+/**
+ * API endpoint to remove a relationship.
+ * @name api/relationships/remove/:id
+ * @function
+ */
+
+router.post('/relationships/remove/:id', checkAccess, async (req, res) => {
+    const user_id = req.session.passport.user;
+    const second_user_id = req.params.id;
+    try {
+        const { rows } = await db.pool.query(`DELETE FROM user_relationship WHERE user_id = '${user_id}' AND ref_user_id = '${second_user_id}'`);
         return res.status(200).json({success: true});
         
     } catch (err) {
