@@ -61,7 +61,7 @@ async function httpPost(request, obj){
 
 // Testing the application
 QUnit.test("User can register", async function(assert){
-  testRes = await httpPost ("register", testUser.register)
+  testRes = await httpPost ("register", testUser.register);
   assert.equal(testRes.success, True, "User has been able to register successfully")
 })
 
