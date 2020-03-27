@@ -30,3 +30,11 @@ npm test
 
 - Email sending with node:
 -- https://www.w3schools.com/nodejs/nodejs_email.asp
+
+## Username legend
+austcollins: Austin Collins
+Zarhad-01: Zahid Awan
+Lucinda94: Lucinda Cole
+JackSines: Jack Sines
+Lyxnx: Alistair Julnes
+LybinBabu: Lybin Babu
