@@ -1,18 +1,11 @@
 # Lecture Link [![Build Status](https://travis-ci.com/Lucinda94/Lecture-Link.svg?branch=master)](https://travis-ci.com/Lucinda94/Lecture-Link)
 Lecturer messaging app
 
-## TODO
-- [X] Database
-  - [X] ERD
-  - [X] Double check links and check for loops etc
-  - [ ] Data Dictionary
-  - [X] Create code
-- [ ] Add database support (possibly PostgreSQL or even MySQL)
-- [ ] Add API endpoints for fetching user data (eg /api/chats/:user)
-  - [ ] Add authentication for each endpoint (I'm thinking using JSON web tokens (JWT) maybe)
-- [ ] Actually make the app work
-- [ ] Create test scripts
+## Introduction
+Lecture Link is a web application for the use of Students and Lecturers to communicate during lectures as well as outside of University. 
 
+## How to install
+You will need to gitclone the repository
 
 ## References
 - The login system:
