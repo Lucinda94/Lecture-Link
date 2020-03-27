@@ -6,7 +6,7 @@
     "scripts": {
         "setup": "npm install && npm run initpgsql",
         "initpgsql": "createdb lecturelink2; psql lecturelink2 < sql/init.sql",
-        "loadDummyData": "psql lecturelink < sql/dummy-data.sql",
+        "loadDummyData": "psql lecturelink2 < sql/dummy-data.sql",
         "start": "node server.js",
         "devStart": "nodemon server.js",
         "test": "qunit",

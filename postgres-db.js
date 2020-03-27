@@ -17,7 +17,7 @@ const { Pool } = require('pg');
 const pool = new Pool({
     database: 'lecturelink2',
     statement_timeout: 5000,
-    host: '/var/run/postgresql'
+    host: 'localhost'
 });
 /**
  * Export the modual for use in the application
