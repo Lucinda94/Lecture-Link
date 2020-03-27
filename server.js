@@ -100,6 +100,8 @@ app.get('/register/confirm-email', checkNotLoggedIn, (req, res) => {
 app.post('/register', checkNotLoggedIn, async (req, res, next) => {
   try {    
     // hash the password the user has sent. Use await as this is async
+
+
     const passHash = await bcrypt.hash(req.body.password, 10);
     const { rows } = await db.pool.query('INSERT INTO user_account VALUES(DEFAULT,$1,$2,$3,$4,DEFAULT,$5)', [req.body.fname, req.body.lname, req.body.email, passHash, "Busy"]);
     // TODO: send confirmation email
@@ -112,13 +114,15 @@ app.post('/register', checkNotLoggedIn, async (req, res, next) => {
   } catch (err) {
     console.log(err);
     // something went wrong, try again.
-    res.status(200);
+    res.status(409);
     res.redirect('/login?registration_failed=true');
   }
 })
+
 // handles logging out
 app.get('/logout', (req, res) => {
   req.logOut(); // tell passport to log the user out
+  res.status(200);
   res.redirect('/login'); // redirect to the login page
 })
 app.get('/forgot', (req, res) => {
