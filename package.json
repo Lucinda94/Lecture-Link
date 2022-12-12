@@ -19,7 +19,7 @@
         "chai": "^4.2.0",
         "chai-http": "^4.3.0",
         "ejs": "^2.5.5",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "express-flash": "0.0.2",
         "express-session": "^1.17.0",
         "http": "0.0.0",
